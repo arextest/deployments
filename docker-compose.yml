@@ -46,7 +46,7 @@ services:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
-    image: hub.cloud.ctripcorp.com/arex/arex-config:0.1
+    image: arexadmin01/arex-config:0.1
     container_name: arex-config
     restart: always
     ports:
@@ -56,7 +56,7 @@ services:
     depends_on:
       - mysql
   arex-report-service:
-    image: hub.cloud.ctripcorp.com/arex/arex-report:0.1
+    image: arexadmin01/arex-report:0.1
     container_name: arex-report
     restart: always
     ports:
@@ -66,7 +66,7 @@ services:
     depends_on:
       - mongodb  
   arex-front-end:
-    image: hub.cloud.ctripcorp.com/arex/replay-front-end:0.1
+    image: arexadmin01/replay-front-end:0.1
     container_name: arex-front
     restart: always
     ports:
@@ -79,7 +79,7 @@ services:
       - arex-report-service
       - arex-config-service
   arex-storage-service:
-    image: hub.cloud.ctripcorp.com/arex/arex-storage-serive:0.1
+    image: arexadmin01/arex-storage-serive:0.1
     container_name: arex-storage
     restart: always
     ports:
@@ -90,7 +90,7 @@ services:
       - mongodb
       - redis
   arex-schedule-service:
-    image: hub.cloud.ctripcorp.com/arex/arex-replay-schedule:0.1
+    image: arexadmin01/arex-replay-schedule:0.1
     container_name: arex-schedule
     restart: always
     ports:
