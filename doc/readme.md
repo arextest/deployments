@@ -70,14 +70,113 @@ AREX: AREX is a “Differential Testing” and “Record and Replay Testing” T
 
 ## Installation
 
-## Administration
+### Install areXTest
 
-## Operations
+```
+git pull git@github.com:arextest/dev-ops.git
+cd dev-ops
+docker-compose up -d
+```
+
+- Get your Host ip address, such as 10.3.2.42
+- Visit your areXTest http://10.3.2.42:8088/
+
+### Run demo
+
+- Get your Host ip address, such as 10.5.122.70
+- Config arex.agent.conf
+
+```
+arex.service.name=spring-petclinc-old
+arex.storage.service.host=10.3.2.42:8093
+arex.config.service.host=10.3.2.42:8091
+```
+
+#### Run spring-petclinic old version
+
+```
+git pull git@github.com:arextest/dev-ops.git
+cd dev-ops/agent
+docker run  -v "$PWD":/usr/src/arex --rm -p 8080:8080 --name petclinic-old   -w /usr/src/arex openjdk:11  java -javaagent:/usr/src/arex/arex-agent-0.0.1.jar -Dhost.ip=10.5.122.70  -Darex.config.path=/usr/src/arex/arex.agent.conf -jar /usr/src/arex/spring-petclinic-2.6.0-SNAPSHOT.jar -m org.springframework.samples.petclinic.PetClinicApplication &
+
+```
+
+- Visit the old version spring-petclinic http://10.3.2.237:8080/
+- Do something of demo's operation: Find owner, Add Owner...
+- arexTest agent begin to auto record TESTCASE -- all request and response of the spring-petclinic
+- Those TESTCASE will be replayed at areXTest.
+
+#### Run spring-petclinic new version
+
+```
+git pull git@github.com:arextest/dev-ops.git
+cd dev-ops/agent
+
+docker run  -v "$PWD":/usr/src/arex --rm -p 8088:8080 --name petclinic-new   -w /usr/src/arex openjdk:11  java -javaagent:/usr/src/arex/arex-agent-0.0.1.jar  -Dhost.ip=10.5.122.70  -Darex.config.path=/usr/src/arex/arex.agent.conf -jar /usr/src/arex/spring-petclinic-2.6.0-SNAPSHOT-New.jar -m org.springframework.samples.petclinic.PetClinicApplication &
+```
+
+- Visit the new version spring-petclinic http://10.3.2.237:8088/
+
+## Administration
 
 ### areXTest Dashboard
 
-dashboard
-![Dashboard Top](./images/dashboard-top.png)
+- Visit areXTest dashboard, and
+  ![Dashboard Top](./images/dashboard-top.png)
+
+- Testring Trend
+  ![Dashboard Top](./images/dashboard-trend.png)
+
+### areXTest Replays
+
+- Visit arexTest replays
+  ![replays](./images/replays.png)
+- Find your applications
+- Click Action "start replay"
+- Input you target host "http://10.3.2.237:8088/"
+  ![replay-start-target](./images/replays-start.png)
+- Then, Visit the "latest report" to see you those test result.
+  ![replay-report](./images/replays-report.png)
+- The report include Base Information, Replay pass Rate and others. See the next topic.
+
+### arexTest Reports
+
+- Visit areXTest reports
+  ![reports](./images/results.png)
+- Find your appication
+- Or query your application by name
+- Click the action "report" at the right side
+- View your report detail (same as areXTest replays report)
+- View TESTCASE information, such as State, Total Cases, Passed, Failed, Invalid, Block...
+  ![detail](./images/results-grid.png)
+- Click "rerun" action, and you will run those TESTCASE again.
+- Click "Result" to see what case failed
+  ![results detail](./images/results-detail.png)
+- The left area is displaying scenrio (Diff detail integrated by the same diff)
+- The right area is displaying the scenrio's nodes whick has diffence
+- Clicking the "Scenes" link, you will see the diff detail
+  ![diff detail](./images/diff-detail.png)
+- Clicking the "Cases" link, you will see all cases about this replaying
+  ![cases](./images/cases.png)
+- Then, Clicking the "details", you will see the replaying logs and result.
+  ![case diff detail](./images/case-diff-detail.png)
+  ![case diff detail 2](./images/case-diff-detail2.png)
+
+### areXTest configs
+
+- Visit areXTest config
+  ![config](./images/config.png)
+- Config application record options
+  - config record basic options
+    ![config record basic](./images/config-record-basic.png)
+  - config record advance options
+    ![config record advanced](./images/config-record-advanced.png)
+- Config application replay options
+  ![config replay](./images/config-replay.png)
+- Config application Diff options
+  ![config diff](./images/config-diff.png)
+- Your cann import or export all Configration by YAML file
+  ![config yaml](./images/config-yaml.png)
 
 ## Permissions
 
