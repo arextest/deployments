@@ -1,6 +1,6 @@
 FROM tomcat:9.0-jdk8-openjdk  
 
-ARG WAR_FILE=./target/arex-replay-schedule-1.0.0-sources.jar
+ARG WAR_FILE=./target/arex-replay-schedule-1.0.0.war
 ADD $WAR_FILE /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/conf
