@@ -1,0 +1,6 @@
+cluster.name: "my-es-cluster"
+network.host: 0.0.0.0
+
+#discovery.seed_hosts: false
+##cluster.initial_master_nodes: false
+##discovery.type: single-node

@@ -1,0 +1,22 @@
+filebeat.inputs:
+- type: tomcat
+  enabled: true
+  paths:
+    - /logs/*/*.log
+  input_type: log #从文件中读取
+  tail_files: true #以文件末尾开始读取数据
+  multiline:
+    pattern: ^\d{4}
+    match: after
+    negate: true        
+
+output.logstash:
+  enabled: true
+  hosts: ["logstash:5044"]
+
+
+#logging.level: debug
+##logging.to_stderr: true
+#
+#output.console:
+#   pretty:true

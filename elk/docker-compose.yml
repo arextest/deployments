@@ -1,0 +1,61 @@
+version: "3.0"
+services:
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    environment:
+      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
+      - "discovery.type=single-node" #以单一节点模式启动
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m" #设置使用jvm内存大小
+    volumes:
+      #- ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z 
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins
+    container_name: elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - "elk"
+
+  filebeat:
+    image: elastic/filebeat:7.7.0
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./filebeat/log:/usr/share/filebeat/log
+      - ./filebeat/data:/usr/share/filebeat/data
+      - ../arex-logs/:/logs
+    container_name: filebeat
+    privileged: true
+    restart: always
+    networks:
+      - "elk"
+    depends_on:
+      - "logstash"
+
+  logstash:
+    image: logstash:7.7.0
+    container_name: logstash
+    restart: always
+    volumes:
+      - ./logstash/logstash_stdout.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - "elk"
+
+  kibana:
+    image: kibana:7.7.0
+    container_name: kibana
+    restart: always
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    #volumes:
+    #  - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - "5601:5601"
+    networks: 
+      - "elk"
+
+networks:
+  elk:
+    driver: bridge
+
