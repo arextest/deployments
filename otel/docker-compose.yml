@@ -1,0 +1,87 @@
+version: "3"
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    environment:
+      - "cluster.name=elasticsearch" 
+      - "discovery.type=single-node" 
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m" 
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins
+    container_name: elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  oap:
+    image: apache/skywalking-oap-server:8.9.1
+    container_name: oap
+    restart: always
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    ports:
+      - "11800:11800"
+      - "12800:12800"
+    healthcheck:
+      test: [ "CMD-SHELL", "/skywalking/bin/swctl ch" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      SW_STORAGE: elasticsearch
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      SW_HEALTH_CHECKER: default
+      SW_TELEMETRY: prometheus
+      JAVA_OPTS: "-Xms2048m -Xmx2048m"
+
+  ui:
+    image: apache/skywalking-ui:8.9.1
+    container_name: ui
+    restart: always
+    depends_on:
+      - oap
+    links:
+      - oap
+    ports:
+      - "8080:8080"
+    environment:
+      SW_OAP_ADDRESS: http://oap:12800
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    restart: always
+    ports:
+      - "16686:16686"
+      - "14250"
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    restart: always
+    ports:
+      - "9411:9411"
+  otel-collector:
+    image: otel/opentelemetry-collector:0.46.0
+    container_name: collector
+    restart: always
+    command: ["--config=/etc/otel-collector-config.yml"]
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    ports:
+      - "1888:1888"   # pprof extension
+      - "8888:8888"   # Prometheus metrics exposed by the collector  Default endpoint for querying metrics.
+      - "8889:8889"   # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "4317:4317"   # Default endpoint for OpenTelemetry gRPC receiver.
+      - "4318:4318"   # Default endpoint for OpenTelemetry HTTP receiver.
+      - "9411"        # Zipkin receiver
+      - "55678:55678" # Opencencus
+      - "55679:55679" # zpages extension
+    depends_on:
+      - jaeger
+
