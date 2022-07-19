@@ -1,0 +1,142 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: arex-mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=arex_admin
+      - MYSQL_PASSWORD=arex_admin_password
+      - MYSQL_DATABASE=arexdb
+    volumes:
+      - ./mysql_init/:/docker-entrypoint-initdb.d/
+      - ./conf.d:/etc/mysql/conf.d:ro
+      - ./arex-data/mysql:/var/lib/mysql
+      - ./arex-logs/mysql:/var/log/mysql.log
+  mongodb:
+    image: mongo:5.0
+    container_name: arex-mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./arex-data/mongodb:/data/db
+      - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./arex-logs/mongodb:/var/log/mongodb
+    command: --auth
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=citizix
+      - MONGO_INITDB_ROOT_PASSWORD=S3cret
+      - MONGO_INITDB_DATABASE=rootdb
+      - MONGO_USERNAME=arex
+      - MONGO_PASSWORD=iLoveArex
+  redis:
+    image: redis:6.2.6
+    container_name: arex-redis
+    restart: always
+    command: --appendonly yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./arex-data/redis:/data
+      - ./arex-logs/redis:/var/log/redis
+  arex-config-service:
+    image: arexadmin01/arex-config:0.1
+    container_name: arex-config
+    restart: always
+    ports:
+      - '8091:8080'
+    volumes:
+      - ./arex-logs/arex-config:/usr/local/tomcat/logs
+      - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
+    environment:
+      - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+      - OTEL_SERVICE_NAME=SERVICE_CONFIG
+      - OTEL_RESOURCE_ATTRIBUTES=application=AREX
+    depends_on:
+      - mysql
+  arex-report-service:
+    image: arexadmin01/arex-report:0.1
+    container_name: arex-report
+    restart: always
+    ports:
+      - '8090:8080'
+    volumes:
+      - ./arex-logs/arex-report:/usr/local/tomcat/logs
+      - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
+    environment:
+      - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+      - OTEL_SERVICE_NAME=SERVICE_REPORT
+      - OTEL_RESOURCE_ATTRIBUTES=application=AREX
+    depends_on:
+      - mongodb  
+  arex-front-end:
+    image: arexadmin01/replay-front-end:0.1
+    container_name: arex-front
+    restart: always
+    ports:
+      - '8088:8088'
+    volumes:
+      - ./arex-logs/arex-front:/usr/src/app/logs
+    environment:
+      - PAAS_ENV=DEMO
+    depends_on:
+      - arex-report-service
+      - arex-config-service
+  arex-storage-service:
+    image: arexadmin01/arex-storage-serive:0.1
+    container_name: arex-storage
+    restart: always
+    ports:
+      - '8093:8080'
+    volumes:
+      - ./arex-logs/arex-storage:/usr/local/tomcat/logs
+      - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
+    environment:
+      - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+      - OTEL_SERVICE_NAME=SERVICE_STORAGE
+      - OTEL_RESOURCE_ATTRIBUTES=application=AREX
+    depends_on:
+      - mongodb
+      - redis
+  arex-schedule-service:
+    image: arexadmin01/arex-replay-schedule:0.1
+    container_name: arex-schedule
+    restart: always
+    ports:
+      - '8092:8080'
+    volumes:
+      - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
+      - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
+    environment:
+      - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
+      - OTEL_SERVICE_NAME=SERVICE_SCHEDULE
+      - OTEL_RESOURCE_ATTRIBUTES=application=AREX
+    depends_on:
+      - mysql
+      - redis
