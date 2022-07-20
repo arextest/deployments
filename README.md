@@ -55,7 +55,7 @@ AREX is under development now.
 ```
 git clone https://github.com/arextest/deployments.git
 cd deployments
-docker compose up -d
+docker-compose up -d
 ```
 
 #### AREX Agent config
