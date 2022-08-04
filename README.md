@@ -1,3 +1,6 @@
+AREX: Real automated API testing with real data.  
+[AREX Handbook](https://arextest.github.io/arex-doc/index.html)
+
 ## AREX install  
 AREX provide docker-compose.yml to install with docker compose.
 
