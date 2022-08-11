@@ -113,7 +113,7 @@ services:
       - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-storage:/var/log/nginx
     ports:
-      - "8093:9093"
+      - "8093:8093"
     depends_on:
       - arex-storage-service1
       - arex-storage-service2
@@ -146,7 +146,7 @@ services:
       - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-schedule:/var/log/nginx
     ports:
-      - "8092:9092"
+      - "8092:8092"
     depends_on:
       - arex-schedule-service1
       - arex-schedule-service2
