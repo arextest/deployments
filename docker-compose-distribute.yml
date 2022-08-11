@@ -76,7 +76,7 @@ services:
     container_name: arex-front
     restart: always
     ports:
-      - '8088:8080'
+      - '8088:8088'
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
