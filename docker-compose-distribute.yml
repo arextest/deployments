@@ -146,7 +146,7 @@ services:
       - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-schedule:/var/log/nginx
     ports:
-      - "8092:8092"
+      - "8092:8080"
     depends_on:
       - arex-schedule-service1
       - arex-schedule-service2
