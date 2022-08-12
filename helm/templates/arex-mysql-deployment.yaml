@@ -1,0 +1,60 @@
+{{- if .Values.mysql.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.mysql.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.mysql.fullname" . }}
+spec:
+  replicas: {{ .Values.mysql.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}
+  template:
+    metadata:
+    {{- if .Values.mysql.podAnnotations }}
+      annotations:
+{{ toYaml .Values.mysql.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}
+        component: "{{ .Values.mysql.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.mysql.name }}
+          image: "{{ .Values.registerPre }}:{{ .Values.mysql.image.repository }}.{{ .Values.mysql.image.tag }}"
+          imagePullPolicy: "{{ .Values.mysql.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.mysql.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: admin
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: kubernetes123
+            - name: MONGO_INITDB_DATABASE
+              value: fltarexdb
+          ports:
+            - containerPort: 27017
+          resources:
+{{ toYaml .Values.mysql.resources | indent 12 }}
+    {{- if .Values.mysql.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mysql.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.mysql.tolerations }}
+      tolerations:
+{{ toYaml .Values.mysql.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.mysql.affinity }}
+      affinity:
+{{ toYaml .Values.mysql.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
+

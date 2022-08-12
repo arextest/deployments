@@ -1,0 +1,45 @@
+{{- if .Values.redis.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.redis.service.annotations }}
+  annotations:
+{{ toYaml .Values.redis.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.redis.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.redis.service.labels }}
+{{ toYaml .Values.redis.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "arex.redis.fullname" . }}
+spec:
+{{- if .Values.redis.service.clusterIP }}
+  clusterIP: {{ .Values.redis.service.clusterIP }}
+{{- end }}
+{{- if .Values.redis.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.redis.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.redis.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.redis.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.redis.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.redis.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: mongo-http
+      port: {{ .Values.redis.service.servicePort }}
+  selector:
+    app: {{ template "arex.name" . }}
+    component: "{{ .Values.redis.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.redis.service.type }}"
+{{- end }}
+

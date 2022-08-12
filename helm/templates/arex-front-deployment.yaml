@@ -1,0 +1,58 @@
+{{- if .Values.front.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}-{{ .Values.front.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.front.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.front.fullname" . }}
+spec:
+  replicas: {{ .Values.front.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}-{{ .Values.front.name }}
+  template:
+    metadata:
+    {{- if .Values.front.podAnnotations }}
+      annotations:
+{{ toYaml .Values.front.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}-{{ .Values.front.name }}
+        component: "{{ .Values.front.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.front.name }}
+          image: "{{ .Values.registerPre }}:{{ .Values.front.image.repository }}.{{ .Values.front.image.tag }}"
+          imagePullPolicy: "{{ .Values.front.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.front.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: arex-GW
+              value: {{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local::{{ .Values.storage.service.servicePort }}/alert/access
+            - name: DATABASE
+              value: {{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -DmongoDbPort={{ .Values.mongodb.service.servicePort }}
+          ports:
+            - containerPort: {{ .Values.front.service.servicePort }}
+          resources:
+{{ toYaml .Values.front.resources | indent 12 }}
+    {{- if .Values.front.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.front.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.front.tolerations }}
+      tolerations:
+{{ toYaml .Values.front.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.front.affinity }}
+      affinity:
+{{ toYaml .Values.front.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
+

@@ -1,0 +1,60 @@
+{{- if .Values.redis.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.redis.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.redis.fullname" . }}
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}
+  template:
+    metadata:
+    {{- if .Values.redis.podAnnotations }}
+      annotations:
+{{ toYaml .Values.redis.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}
+        component: "{{ .Values.redis.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.redis.name }}
+          image: "{{ .Values.registerPre }}:{{ .Values.redis.image.repository }}.{{ .Values.redis.image.tag }}"
+          imagePullPolicy: "{{ .Values.redis.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.redis.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: admin
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: kubernetes123
+            - name: MONGO_INITDB_DATABASE
+              value: fltarexdb
+          ports:
+            - containerPort: 27017
+          resources:
+{{ toYaml .Values.redis.resources | indent 12 }}
+    {{- if .Values.redis.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.redis.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.redis.tolerations }}
+      tolerations:
+{{ toYaml .Values.redis.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.redis.affinity }}
+      affinity:
+{{ toYaml .Values.redis.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
+

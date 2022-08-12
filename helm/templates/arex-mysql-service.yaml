@@ -1,0 +1,45 @@
+{{- if .Values.mysql.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.mysql.service.annotations }}
+  annotations:
+{{ toYaml .Values.mysql.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.mysql.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.mysql.service.labels }}
+{{ toYaml .Values.mysql.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "arex.mysql.fullname" . }}
+spec:
+{{- if .Values.mysql.service.clusterIP }}
+  clusterIP: {{ .Values.mysql.service.clusterIP }}
+{{- end }}
+{{- if .Values.mysql.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.mysql.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.mysql.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.mysql.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.mysql.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.mysql.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: mongo-http
+      port: {{ .Values.mysql.service.servicePort }}
+  selector:
+    app: {{ template "arex.name" . }}
+    component: "{{ .Values.mysql.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.mysql.service.type }}"
+{{- end }}
+

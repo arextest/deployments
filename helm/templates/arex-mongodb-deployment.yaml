@@ -1,0 +1,60 @@
+{{- if .Values.mongodb.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.mongodb.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.mongodb.fullname" . }}
+spec:
+  replicas: {{ .Values.mongodb.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}
+  template:
+    metadata:
+    {{- if .Values.mongodb.podAnnotations }}
+      annotations:
+{{ toYaml .Values.mongodb.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}
+        component: "{{ .Values.mongodb.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.mongodb.name }}
+          image: "{{ .Values.registerPre }}:{{ .Values.mongodb.image.repository }}.{{ .Values.mongodb.image.tag }}"
+          imagePullPolicy: "{{ .Values.mongodb.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.mongodb.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: admin
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: kubernetes123
+            - name: MONGO_INITDB_DATABASE
+              value: fltarexdb
+          ports:
+            - containerPort: 27017
+          resources:
+{{ toYaml .Values.mongodb.resources | indent 12 }}
+    {{- if .Values.mongodb.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mongodb.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.mongodb.tolerations }}
+      tolerations:
+{{ toYaml .Values.mongodb.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.mongodb.affinity }}
+      affinity:
+{{ toYaml .Values.mongodb.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
+

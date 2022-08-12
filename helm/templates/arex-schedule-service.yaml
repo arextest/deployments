@@ -1,0 +1,47 @@
+{{- if .Values.schedule.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.schedule.service.annotations }}
+  annotations:
+{{ toYaml .Values.schedule.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    app: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.schedule.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.schedule.service.labels }}
+{{ toYaml .Values.schedule.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "arex.schedule.fullname" . }}
+spec:
+{{- if .Values.schedule.service.clusterIP }}
+  clusterIP: {{ .Values.schedule.service.clusterIP }}
+{{- end }}
+{{- if .Values.schedule.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.schedule.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.schedule.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.schedule.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.schedule.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.schedule.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.schedule.service.servicePort }}
+      protocol: TCP
+      targetPort: {{ .Values.schedule.service.servicePort }}
+  selector:
+    app: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+    component: "{{ .Values.schedule.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.schedule.service.type }}"
+{{- end }}
+

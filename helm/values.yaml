@@ -1,0 +1,233 @@
+rbac:
+  create: false
+
+nameOverride: ""
+fullnameOverride: ""
+# register prefix
+registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
+
+front:
+  enabled: true
+  name: arex-front-end
+  image:
+    repository: arexadmin01/replay-front-end
+    tag: 0.1
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8088
+    type: ClusterIP
+
+  ingress:
+    enabled: true
+    annotations: {}
+    hosts: ["demo.arextext.com"]
+    tls: ""
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+config:
+  enabled: true
+  name: arex-config-service
+  image: 
+    repository: arexadmin01/arex-config
+    tag: 0.1
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8080
+    type: ClusterIP
+
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts: ["arex.io"] 
+    tls: ""
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  selector: {}
+
+storage:
+  enabled: true
+  name: arex-storage-service
+  image:
+    repository: arexadmin01/arex-storage-serive
+    tag: 0.1
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8093
+    type: ClusterIP
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+report:
+  enabled: true
+  name: arex-report-service
+  image:
+    repository: arexadmin01/arex-report
+    tag: 0.1
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8090
+    type: ClusterIP
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+mongodb:
+  enabled: true
+  name: mongodb
+  image:
+    repository: mongodb
+    tag: 5.0
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 27017
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
+schedule:
+  enabled: true
+  name: arex-schedule-service
+  image:
+    repository: arexadmin01/arex-replay-schedule
+    tag: 0.1
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8092
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
+redis:
+  enabled: true
+  name: redis
+  image:
+    repository: redis
+    tag: 6.2.6
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 6379
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
+mysql:
+  enabled: true
+  name: mysql
+  image:
+    repository: mysql
+    tag: 8.0.29
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 3306
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
