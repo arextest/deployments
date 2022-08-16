@@ -1,6 +1,22 @@
 version: "3"
 
 services:
+  arex-front-end:
+    image: arexadmin01/replay-front-end:0.1
+    container_name: arex-front
+    restart: always
+    ports:
+      - '8088:8080'
+    volumes:
+      - ./arex-logs/arex-front:/usr/src/app/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - SERVICE_REPORT_URL=http://arex-report-service:8080
+      - SERVICE_CONFIG_URL= http://arex-config-service:8080
+      - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
+    depends_on:
+      - arex-report-service
+      - arex-config-service
   mysql:
     image: mysql:8.0.29
     container_name: arex-mysql
@@ -18,6 +34,7 @@ services:
       - ./conf.d:/etc/mysql/conf.d:ro
       - ./arex-data/mysql:/var/lib/mysql
       - ./arex-logs/mysql:/var/log/mysql.log
+      - /etc/localtime:/etc/localtime
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -30,6 +47,7 @@ services:
       - ./arex-logs/mongodb:/var/log/mongodb
     command: --auth
     environment:
+      - /etc/localtime:/etc/localtime
       - MONGO_INITDB_ROOT_USERNAME=citizix
       - MONGO_INITDB_ROOT_PASSWORD=S3cret
       - MONGO_INITDB_DATABASE=rootdb
@@ -43,6 +61,7 @@ services:
     ports:
       - 6379:6379
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
@@ -52,7 +71,10 @@ services:
     ports:
       - '8091:8080'
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./arex-logs/arex-config:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=%JAVA_OPTS% -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
     depends_on:
       - mysql
   arex-report-service:
@@ -62,24 +84,10 @@ services:
     ports:
       - '8090:8080'
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     depends_on:
       - mongodb  
-    environment:
-      - "JAVA_OPTS=-Dspring.profiles.active=prod"
-  arex-front-end:
-    image: arexadmin01/replay-front-end:0.1
-    container_name: arex-front
-    restart: always
-    ports:
-      - '8088:8080'
-    volumes:
-      - ./arex-logs/arex-front:/usr/src/app/logs
-    environment:
-      - PAAS_ENV=DEMO
-    depends_on:
-      - arex-report-service
-      - arex-config-service
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:0.1
     container_name: arex-storage
@@ -87,6 +95,7 @@ services:
     ports:
       - '8093:8080'
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
     depends_on:
       - mongodb
@@ -98,10 +107,8 @@ services:
     ports:
       - '8092:8080'
     volumes:
+      - /etc/localtime:/etc/localtime
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
     depends_on:
       - mysql
       - redis
-    environment:
-      - TZ=Asia/Shanghai
-      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Darex.schedule.cache.redis.host=redis://redis:6379 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.profiles.active=docker"
