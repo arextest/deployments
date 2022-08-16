@@ -66,11 +66,7 @@ services:
     depends_on:
       - mongodb  
     environment:
-      - arex.config.service.url=http://arex-config-service:8080/api
-      - arex.report.email.from=arextestdemo@163.com
-      - arex.report.email.host=smtp.163.com
-      - arex.report.email.pwd=TRXLXXTQTMDKRCXD
-      - arex.report.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db
+      - "JAVA_OPTS=-Dspring.profiles.active=prod"
   arex-front-end:
     image: arexadmin01/replay-front-end:0.1
     container_name: arex-front
@@ -106,6 +102,6 @@ services:
     depends_on:
       - mysql
       - redis
-#    environment:
-#      - TZ=Asia/Shanghai
-#      - "JAVA_OPTS=-Dspring.profiles.active=dev-docker"
+    environment:
+      - TZ=Asia/Shanghai
+      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Darex.schedule.cache.redis.host=redis://redis:6379 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.profiles.active=docker"
