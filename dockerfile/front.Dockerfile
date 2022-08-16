@@ -15,5 +15,5 @@ RUN npm run build
 # COPY . .
 
 EXPOSE 8080
-CMD [ "node", "server.js",">","app.log"]
+CMD [ "node", "server.js",">","./logs/app.log"]
 
