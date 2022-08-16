@@ -71,10 +71,11 @@ services:
     ports:
       - '8091:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-config:/usr/local/tomcat/logs
     environment:
-      - "JAVA_OPTS=$JAVA_OPTS -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
+      - "JAVA_OPTS=${JAVA_OPTS} -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
     depends_on:
       - mysql
   arex-report-service:
