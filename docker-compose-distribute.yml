@@ -2,13 +2,14 @@ version: "3"
 
 services:
   arex-front-end:
-    image: arexadmin01/replay-front-end:0.1
+    image: arexadmin01/replay-front-end:0.2
     container_name: arex-front
     restart: always
     ports:
       - '8088:8088'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
@@ -30,7 +31,6 @@ services:
       - MYSQL_PASSWORD=arex_admin_password
       - MYSQL_DATABASE=arexdb
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./mysql_init/:/docker-entrypoint-initdb.d/
       - ./conf.d:/etc/mysql/conf.d:ro
       - ./arex-data/mysql:/var/lib/mysql
@@ -42,7 +42,6 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
@@ -61,53 +60,56 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
-    image: arexadmin01/arex-config:0.1
+    image: arexadmin01/arex-config:0.2
     container_name: arex-config
     restart: always
     ports:
       - '8091:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-config:/usr/local/tomcat/logs
     environment:
       - "JAVA_OPTS=$JAVA_OPTS -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
     depends_on:
       - mysql
   arex-report-service:
-    image: arexadmin01/arex-report:0.1
+    image: arexadmin01/arex-report:0.2
     container_name: arex-report
     restart: always
     ports:
       - '8090:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     depends_on:
       - mongodb  
   arex-storage-service1:
-    image: arexadmin01/arex-storage-serive:0.1
+    image: arexadmin01/arex-storage-serive:0.2
     container_name: arex-storage1
     restart: always
     ports:
       - '10093:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-storage1:/usr/local/tomcat/logs
     depends_on:
       - mongodb
       - redis
   arex-storage-service2:
-    image: arexadmin01/arex-storage-serive:0.1
+    image: arexadmin01/arex-storage-serive:0.2
     container_name: arex-storage2
     restart: always
     ports:
       - '11093:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-storage2:/usr/local/tomcat/logs
     depends_on:
       - mongodb
@@ -116,7 +118,6 @@ services:
     container_name: storage-nginx
     image: nginx
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-storage:/var/log/nginx
     ports:
@@ -125,25 +126,27 @@ services:
       - arex-storage-service1
       - arex-storage-service2
   arex-schedule-service1:
-    image: arexadmin01/arex-replay-schedule:0.1
+    image: arexadmin01/arex-replay-schedule:0.2
     container_name: arex-schedule1
     restart: always
     ports:
       - '10092:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
     depends_on:
       - mysql
       - redis
   arex-schedule-service2:
-    image: arexadmin01/arex-replay-schedule:0.1
+    image: arexadmin01/arex-replay-schedule:0.2
     container_name: arex-schedule2
     restart: always
     ports:
       - '11092:8080'
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
     depends_on:
       - mysql
@@ -152,7 +155,6 @@ services:
     container_name: schedule-nginx
     image: nginx
     volumes:
-      - /etc/localtime:/etc/localtime
       - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-schedule:/var/log/nginx
     ports:
