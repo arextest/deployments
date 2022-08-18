@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  arex-front-end:
-    image: arexadmin01/replay-front-end:0.2
+  arex:
+    image: arexadmin01/arex:0.2
     container_name: arex-front
     restart: always
     ports:
@@ -31,6 +31,8 @@ services:
       - MYSQL_PASSWORD=arex_admin_password
       - MYSQL_DATABASE=arexdb
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./mysql_init/:/docker-entrypoint-initdb.d/
       - ./conf.d:/etc/mysql/conf.d:ro
       - ./arex-data/mysql:/var/lib/mysql
@@ -42,6 +44,8 @@ services:
     ports:
       - 27017:27017
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
@@ -60,6 +64,8 @@ services:
     ports:
       - 6379:6379
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
