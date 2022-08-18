@@ -118,6 +118,8 @@ services:
     container_name: storage-nginx
     image: nginx
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro    
       - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-storage:/var/log/nginx
     ports:
@@ -155,6 +157,8 @@ services:
     container_name: schedule-nginx
     image: nginx
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro    
       - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-schedule:/var/log/nginx
     ports:
