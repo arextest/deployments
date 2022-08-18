@@ -137,6 +137,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password"
     depends_on:
       - mysql
       - redis
@@ -150,6 +152,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password"
     depends_on:
       - mysql
       - redis
