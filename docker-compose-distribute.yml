@@ -8,9 +8,9 @@ services:
     ports:
       - '8088:8080'
     volumes:
-      - ./arex-logs/arex-front:/usr/src/app/logs
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+      - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
       - SERVICE_CONFIG_URL= http://arex-config-service:8080
@@ -31,12 +31,12 @@ services:
       - MYSQL_PASSWORD=arex_admin_password
       - MYSQL_DATABASE=arexdb
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./mysql_init/:/docker-entrypoint-initdb.d/
       - ./conf.d:/etc/mysql/conf.d:ro
       - ./arex-data/mysql:/var/lib/mysql
       - ./arex-logs/mysql:/var/log/mysql.log
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -44,11 +44,11 @@ services:
     ports:
       - 27017:27017
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=citizix
@@ -94,29 +94,85 @@ services:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     depends_on:
       - mongodb  
-  arex-storage-service:
+  arex-storage-service1:
     image: arexadmin01/arex-storage-serive:0.2
-    container_name: arex-storage
+    container_name: arex-storage1
     restart: always
     ports:
-      - '8093:8080'
+      - '10093:8080'
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - ./arex-logs/arex-storage:/usr/local/tomcat/logs
+      - ./arex-logs/arex-storage1:/usr/local/tomcat/logs
     depends_on:
       - mongodb
       - redis
-  arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:0.2
-    container_name: arex-schedule
+  arex-storage-service2:
+    image: arexadmin01/arex-storage-serive:0.2
+    container_name: arex-storage2
     restart: always
     ports:
-      - '8092:8080'
+      - '11093:8080'
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
+      - ./arex-logs/arex-storage2:/usr/local/tomcat/logs
+    depends_on:
+      - mongodb
+      - redis
+  arex-storage-service:
+    container_name: storage-nginx
+    image: nginx
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro    
+      - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
+      - ./arex-logs/nginx-storage:/var/log/nginx
+    ports:
+      - "8093:8080"
+    depends_on:
+      - arex-storage-service1
+      - arex-storage-service2
+  arex-schedule-service1:
+    image: arexadmin01/arex-replay-schedule:0.2
+    container_name: arex-schedule1
+    restart: always
+    ports:
+      - '10092:8080'
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password"
     depends_on:
       - mysql
       - redis
+  arex-schedule-service2:
+    image: arexadmin01/arex-replay-schedule:0.2
+    container_name: arex-schedule2
+    restart: always
+    ports:
+      - '11092:8080'
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password"
+    depends_on:
+      - mysql
+      - redis
+  arex-schedule-service:
+    container_name: schedule-nginx
+    image: nginx
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro    
+      - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
+      - ./arex-logs/nginx-schedule:/var/log/nginx
+    ports:
+      - "8092:8080"
+    depends_on:
+      - arex-schedule-service1
+      - arex-schedule-service2
