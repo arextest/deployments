@@ -9,8 +9,6 @@ services:
       - '8088:8080'
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
       - SERVICE_CONFIG_URL= http://arex-config-service:8080
@@ -35,8 +33,6 @@ services:
       - ./conf.d:/etc/mysql/conf.d:ro
       - ./arex-data/mysql:/var/lib/mysql
       - ./arex-logs/mysql:/var/log/mysql.log
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -47,8 +43,6 @@ services:
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=citizix
@@ -64,8 +58,6 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
@@ -75,8 +67,6 @@ services:
     ports:
       - '8091:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-config:/usr/local/tomcat/logs
     environment:
       - "JAVA_OPTS=-Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
@@ -89,9 +79,9 @@ services:
     ports:
       - '8090:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.report.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.report.email.host=smtp.163.com -Darex.report.email.from=arextestdemo@163.com -Darex.report.email.pwd=TRXLXXTQTMDKRCXD"
     depends_on:
       - mongodb  
   arex-storage-service:
@@ -101,8 +91,6 @@ services:
     ports:
       - '8093:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
     depends_on:
       - mongodb
@@ -114,8 +102,6 @@ services:
     ports:
       - '8092:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
     environment:
       - "JAVA_OPTS=-Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080 -Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password"
