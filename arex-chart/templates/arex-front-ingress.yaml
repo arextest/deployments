@@ -12,9 +12,9 @@ metadata:
 spec:
   rules:
   - http:
-    paths:
+      paths:
       - path: /
-        pathType: ImplementationSpecific
+        pathType: Prefix
         backend:
           service:
             name: {{ $serviceName }}
