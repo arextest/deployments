@@ -35,7 +35,7 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -DquartzJobDomain={{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.inform.service.servicePort }} -DmongoDbServer={{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -DmongoDbPort={{ .Values.mongodb.service.servicePort }}  
+              value: -DquartzJobDomain={{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.schedule.service.servicePort }} -DmongoDbServer={{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -DmongoDbPort={{ .Values.mongodb.service.servicePort }}  
           ports:
             - containerPort: {{ .Values.schedule.service.servicePort }}
           resources:
