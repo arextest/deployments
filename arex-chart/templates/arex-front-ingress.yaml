@@ -1,8 +1,4 @@
 {{- if and .Values.front.enabled .Values.front.ingress.enabled -}}
-{{- $releaseName := .Release.Name -}}
-{{- $DOMAIN_NAME := "demo.arextest.com" -}}
-{{- $SECURITY_GROUPS := "Ctrip-NT,Ctrip-OA,Ctrip-Online" -}}
-{{- $CERT_ARN := "arn:aws:acm:us-west-2:630216610805:certificate/bc7d736e-a100-4558-978f-2eaa06692208" -}}
 {{- $serviceName := include "arex.front.fullname" . }}
 {{- $servicePort := .Values.front.service.servicePort -}}
 apiVersion: extensions/v1beta1
@@ -13,13 +9,10 @@ metadata:
 {{ toYaml .Values.front.ingress.annotations | indent 4}}
 {{- end }}
   name: {{ template "arex.front.fullname" . }}
+  {{- if .Values.front.ingress.annotations }}
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    kubernetes.io/ingress.class: alb
-    external-dns.alpha.kubernetes.io/hostname: {{ $DOMAIN_NAME }}
-    alb.ingress.kubernetes.io/certificate-arn: {{ $CERT_ARN }}
-    alb.ingress.kubernetes.io/load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=sabre-adaptrer,access_logs.s3.prefix=alb,idle_timeout.timeout_seconds=35
+  {{ toYaml .Values.front.ingress.annotations | indent 4}}
+  {{- end }}
 spec:
     backend:
       serviceName: {{ $serviceName }}

@@ -4,7 +4,8 @@ rbac:
 nameOverride: ""
 fullnameOverride: ""
 # register prefix
-registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
+registerPre: ""
+# registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
 
 front:
   enabled: true
