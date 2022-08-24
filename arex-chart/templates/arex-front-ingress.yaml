@@ -1,7 +1,7 @@
 {{- if and .Values.front.enabled .Values.front.ingress.enabled -}}
 {{- $serviceName := include "arex.front.fullname" . }}
 {{- $servicePort := .Values.front.service.servicePort -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
 {{- if .Values.front.ingress.annotations }}
@@ -10,7 +10,11 @@ metadata:
 {{- end }}
   name: {{ template "arex.front.fullname" . }}
 spec:
-    backend:
-      serviceName: {{ $serviceName }}
-      servicePort: {{ $servicePort }}
+  - http:
+    paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          serviceName: {{ $serviceName }}
+          servicePort: {{ $servicePort }}
 {{- end -}}
