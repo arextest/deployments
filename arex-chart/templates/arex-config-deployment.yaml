@@ -33,6 +33,7 @@ spec:
           {{- range $key, $value := .Values.config.extraArgs }}
             - --{{ $key }}={{ $value }}
           {{- end }}
+          env:          
             - name: JAVA_OPTS
               value: -Darex.config.mongo.uri=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db
           ports:
