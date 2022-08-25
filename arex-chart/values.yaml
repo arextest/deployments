@@ -9,7 +9,7 @@ registerPre: ""
 
 front:
   enabled: true
-  name: arex-ui
+  name: ui
   image:
     repository: arexadmin01/arex
     tag: 0.2
