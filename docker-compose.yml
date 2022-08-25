@@ -9,8 +9,6 @@ services:
       - '8088:8080'
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
       - SERVICE_CONFIG_URL= http://arex-config-service:8080
@@ -18,25 +16,6 @@ services:
     depends_on:
       - arex-report-service
       - arex-config-service
-  mysql:
-    image: mysql:8.0.29
-    container_name: arex-mysql
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_USER=arex_admin
-      - MYSQL_PASSWORD=arex_admin_password
-      - MYSQL_DATABASE=arexdb
-    volumes:
-      - ./mysql_init/:/docker-entrypoint-initdb.d/
-      - ./conf.d:/etc/mysql/conf.d:ro
-      - ./arex-data/mysql:/var/lib/mysql
-      - ./arex-logs/mysql:/var/log/mysql.log
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -47,8 +26,6 @@ services:
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
     command: --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=citizix
@@ -64,8 +41,6 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
   arex-config-service:
@@ -75,13 +50,11 @@ services:
     ports:
       - '8091:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-config:/usr/local/tomcat/logs
     environment:
-      - "JAVA_OPTS=-Dspring.datasource.url=jdbc:mysql://mysql:3306/arexdb"
+      - "JAVA_OPTS=-Darex.config.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db"
     depends_on:
-      - mysql
+      - mongodb
   arex-report-service:
     image: arexadmin01/arex-report:0.2
     container_name: arex-report
@@ -89,8 +62,6 @@ services:
     ports:
       - '8090:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     depends_on:
       - mongodb  
@@ -101,9 +72,9 @@ services:
     ports:
       - '8093:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db"
     depends_on:
       - mongodb
       - redis
@@ -114,9 +85,7 @@ services:
     ports:
       - '8092:8080'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
     depends_on:
-      - mysql
+      - mongodb
       - redis

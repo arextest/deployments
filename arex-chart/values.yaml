@@ -9,10 +9,10 @@ registerPre: ""
 
 front:
   enabled: true
-  name: arex-front-end
+  name: arex
   image:
-    repository: arexadmin01/replay-front-end
-    tag: 0.1
+    repository: arexadmin01/arex
+    tag: 0.2
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -48,7 +48,7 @@ config:
   name: arex-config-service
   image: 
     repository: arexadmin01/arex-config
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -69,12 +69,6 @@ config:
     servicePort: 8080
     type: ClusterIP
 
-  ingress:
-    enabled: false
-    annotations: {}
-    hosts: ["arex.io"] 
-    tls: ""
-
   resources: {}
   nodeSelector: {}
   podAnnotations: {}
@@ -86,7 +80,7 @@ storage:
   name: arex-storage-service
   image:
     repository: arexadmin01/arex-storage-serive
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -116,7 +110,7 @@ report:
   name: arex-report-service
   image:
     repository: arexadmin01/arex-report
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -169,8 +163,9 @@ schedule:
   name: arex-schedule-service
   image:
     repository: arexadmin01/arex-replay-schedule
-    tag: 0.1
+    tag: 0.2
     pullPolicy: IfNotPresent
+  replicaCount: 2
   service:
     annotations: {}
     labels: {}
@@ -203,29 +198,6 @@ redis:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 6379
-    type: ClusterIP
-
-  nodeSelector: {}
-  podAnnotations: {}
-  tolerations: {}
-  resources: {}
-
-mysql:
-  enabled: true
-  name: mysql
-  image:
-    repository: mysql
-    tag: 8.0.29
-    pullPolicy: IfNotPresent
-  service:
-    annotations: {}
-    labels: {}
-    clusterIP: ""
-    externalIPs: []
-
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: []
-    servicePort: 3306
     type: ClusterIP
 
   nodeSelector: {}

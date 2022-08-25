@@ -33,15 +33,11 @@ spec:
           {{- range $key, $value := .Values.redis.extraArgs }}
             - --{{ $key }}={{ $value }}
           {{- end }}
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              value: admin
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              value: kubernetes123
-            - name: MONGO_INITDB_DATABASE
-              value: fltarexdb
           ports:
-            - containerPort: 27017
+            - containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
           resources:
 {{ toYaml .Values.redis.resources | indent 12 }}
     {{- if .Values.redis.nodeSelector }}
@@ -56,5 +52,9 @@ spec:
       affinity:
 {{ toYaml .Values.redis.affinity | indent 8 }}
     {{- end }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:            
+          claimName: arex-redis-pvc      
 {{- end }}
 

@@ -34,10 +34,12 @@ spec:
             - --{{ $key }}={{ $value }}
           {{- end }}
           env:
-            - name: arex-GW
-              value: {{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local::{{ .Values.storage.service.servicePort }}/alert/access
-            - name: DATABASE
-              value: {{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -DmongoDbPort={{ .Values.mongodb.service.servicePort }}
+            - name: SERVICE_REPORT_URL
+              value: http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.reort.service.servicePort }}  
+            - name: SERVICE_CONFIG_URL
+              value: http://{{ template "arex.config.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.config.service.servicePort }}  
+            - name: SERVICE_SCHEDULE_URL
+              value: http://{{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.schedule.service.servicePort }}  
           ports:
             - containerPort: {{ .Values.front.service.servicePort }}
           resources:

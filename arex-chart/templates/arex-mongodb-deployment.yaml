@@ -35,13 +35,20 @@ spec:
           {{- end }}
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
-              value: admin
+              value: citizix
             - name: MONGO_INITDB_ROOT_PASSWORD
-              value: kubernetes123
+              value: S3cret
             - name: MONGO_INITDB_DATABASE
-              value: fltarexdb
+              value: rootdb
+            - name: MONGO_USERNAME
+              value: arex
+            - name: MONGO_PASSWORD
+              value: iLoveArex
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
           resources:
 {{ toYaml .Values.mongodb.resources | indent 12 }}
     {{- if .Values.mongodb.nodeSelector }}
@@ -56,5 +63,9 @@ spec:
       affinity:
 {{ toYaml .Values.mongodb.affinity | indent 8 }}
     {{- end }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:            
+          claimName: arex-mongodb-pvc
 {{- end }}
 
