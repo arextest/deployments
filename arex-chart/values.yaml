@@ -11,7 +11,7 @@ front:
   enabled: true
   name: ui
   image:
-    repository: arexadmin01/arex
+    repository: arex
     tag: 0.2
     pullPolicy: IfNotPresent
 
