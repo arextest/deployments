@@ -9,7 +9,7 @@ registerPre: ""
 
 front:
   enabled: true
-  name: arex
+  name: arex-ui
   image:
     repository: arexadmin01/arex
     tag: 0.2
@@ -45,7 +45,7 @@ front:
 
 config:
   enabled: true
-  name: arex-config-service
+  name: config
   image: 
     repository: arexadmin01/arex-config
     tag: 0.2
@@ -77,7 +77,7 @@ config:
 
 storage:
   enabled: true
-  name: arex-storage-service
+  name: storage
   image:
     repository: arexadmin01/arex-storage-serive
     tag: 0.2
@@ -107,7 +107,7 @@ storage:
 
 report:
   enabled: true
-  name: arex-report-service
+  name: report
   image:
     repository: arexadmin01/arex-report
     tag: 0.2
@@ -135,6 +135,30 @@ report:
   podAnnotations: {}
   tolerations: {}
 
+schedule:
+  enabled: true
+  name: schedule
+  image:
+    repository: arexadmin01/arex-replay-schedule
+    tag: 0.2
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8092
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
 mongodb:
   enabled: true
   name: mongodb
@@ -151,30 +175,6 @@ mongodb:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 27017
-    type: ClusterIP
-
-  nodeSelector: {}
-  podAnnotations: {}
-  tolerations: {}
-  resources: {}
-
-schedule:
-  enabled: true
-  name: arex-schedule-service
-  image:
-    repository: arexadmin01/arex-replay-schedule
-    tag: 0.2
-    pullPolicy: IfNotPresent
-  replicaCount: 2
-  service:
-    annotations: {}
-    labels: {}
-    clusterIP: ""
-    externalIPs: []
-
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: []
-    servicePort: 8092
     type: ClusterIP
 
   nodeSelector: {}
