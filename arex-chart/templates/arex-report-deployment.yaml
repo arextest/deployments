@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: {{ template "arex.name" . }}-{{ .Values.report.name }}
-          image: "{{ .Values.registerPre }}:{{ .Values.report.image.repository }}.{{ .Values.report.image.tag }}"
+          image: "{{ .Values.registerPre }}{{ .Values.report.image.repository }}:{{ .Values.report.image.tag }}"
           imagePullPolicy: "{{ .Values.report.image.pullPolicy }}"
           args:
           {{- range $key, $value := .Values.report.extraArgs }}
