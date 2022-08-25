@@ -4,7 +4,7 @@ rbac:
 nameOverride: ""
 fullnameOverride: ""
 # register prefix
-registerPre: ""
+registerPre: "arexadmin01/"
 # registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
 
 front:
@@ -47,7 +47,7 @@ config:
   enabled: true
   name: config
   image: 
-    repository: arexadmin01/arex-config
+    repository: arex-config
     tag: 0.2
     pullPolicy: IfNotPresent
 
@@ -79,7 +79,7 @@ storage:
   enabled: true
   name: storage
   image:
-    repository: arexadmin01/arex-storage-serive
+    repository: arex-storage-serive
     tag: 0.2
     pullPolicy: IfNotPresent
 
@@ -109,7 +109,7 @@ report:
   enabled: true
   name: report
   image:
-    repository: arexadmin01/arex-report
+    repository: arex-report
     tag: 0.2
     pullPolicy: IfNotPresent
 
@@ -139,7 +139,7 @@ schedule:
   enabled: true
   name: schedule
   image:
-    repository: arexadmin01/arex-replay-schedule
+    repository: arex-replay-schedule
     tag: 0.2
     pullPolicy: IfNotPresent
   replicaCount: 2
