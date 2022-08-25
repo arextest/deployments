@@ -64,8 +64,8 @@ spec:
 {{ toYaml .Values.mongodb.affinity | indent 8 }}
     {{- end }}
       volumes:
-      - name: data
-        persistentVolumeClaim:            
-          claimName: arex-mongodb-pvc
+        - name: data
+          persistentVolumeClaim:            
+            claimName: arex-mongodb-pvc
 {{- end }}
 

@@ -53,8 +53,8 @@ spec:
 {{ toYaml .Values.redis.affinity | indent 8 }}
     {{- end }}
       volumes:
-      - name: data
-        persistentVolumeClaim:            
-          claimName: arex-redis-pvc      
+        - name: data
+          persistentVolumeClaim:            
+            claimName: arex-redis-pvc      
 {{- end }}
 
