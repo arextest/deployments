@@ -49,6 +49,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data/db
+            - name: settings
+              mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+              subPath: mongo-allone-init.js
           resources:
 {{ toYaml .Values.mongodb.resources | indent 12 }}
     {{- if .Values.mongodb.nodeSelector }}
@@ -67,5 +70,8 @@ spec:
         - name: data
           persistentVolumeClaim:            
             claimName: arex-mongodb-pvc
+        - name: settings
+          configMap:
+            name: arex-mongodb-configs
 {{- end }}
 
