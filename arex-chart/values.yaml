@@ -82,24 +82,20 @@ storage:
     repository: arex-storage-serive
     tag: 0.2
     pullPolicy: IfNotPresent
-
   serviceAcountName: default
   extraArgs: {}
   prefixURL: ""
   baseURL: ""
-
-  replicaCount: 1
+  replicaCount: 2
   service:
     annotations: {}
     labels: {}
     clusterIP: ""
     externalIPs: []
-
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 8093
     type: ClusterIP
-
   resources: {}
   nodeSelector: {}
   podAnnotations: {}
