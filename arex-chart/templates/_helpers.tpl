@@ -66,7 +66,3 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s-%s" .Release.Name $name .Values.redis.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "arex.mysql.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.mysql.name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

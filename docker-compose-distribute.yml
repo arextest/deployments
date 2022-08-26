@@ -96,7 +96,7 @@ services:
         -Darex.report.service.api=http://arex-report-service:8080
         -Darex.config.service.api=http://arex-config-service:8080
     depends_on:
-      - mysql
+      - mongodb
       - redis
   arex-schedule-service2:
     image: arexadmin01/arex-replay-schedule:0.2
@@ -113,7 +113,7 @@ services:
         -Darex.report.service.api=http://arex-report-service:8080
         -Darex.config.service.api=http://arex-config-service:8080
     depends_on:
-      - mysql
+      - mongodb
       - redis
   arex-schedule-service:
     container_name: schedule-nginx

@@ -47,7 +47,7 @@ services:
       - OTEL_SERVICE_NAME=SERVICE_CONFIG
       - OTEL_RESOURCE_ATTRIBUTES=application=AREX
     depends_on:
-      - mysql
+      - mongodb
   arex-report-service:
     image: arexadmin01/arex-report:0.2.1
     container_name: arex-report
