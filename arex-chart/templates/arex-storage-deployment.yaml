@@ -35,7 +35,7 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -DquartzJobDomain={{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }} -DmongoDbServer={{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local -DmongoDbPort={{ .Values.mongodb.service.servicePort }}  
+              value: -Darex.storage.mongo.host=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db 
           ports:
             - containerPort: {{ .Values.storage.service.servicePort }}
           resources:
