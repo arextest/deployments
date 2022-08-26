@@ -37,11 +37,7 @@ services:
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
-      - |
-        JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db
-        -Darex.config.service.url=http://arex-config-service:8080
-        -Darex.storage.service.url=http://arex-storage-service:8080
-        -Darex.ui.url=http://arex:8088      
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://arex:8088      
     depends_on:
       - mongodb  
   arex-storage-service:
@@ -66,11 +62,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
     environment:
-      - |
-        JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db
-        -Darex.storage.service.api=http://arex-storage-service:8080
-        -Darex.report.service.api=http://arex-report-service:8080
-        -Darex.config.service.api=http://arex-config-service:8080
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080
     depends_on:
       - mongodb
       - redis
