@@ -1,8 +1,8 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: arex-local-storage
+  name: local-storage
 # provisioner: kubernetes.io/minikube-hostpath
-volumeBindingMode: Immediate
+# volumeBindingMode: Immediate
 provisioner: kubernetes.io/no-provisioner
-#volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: WaitForFirstConsumer
