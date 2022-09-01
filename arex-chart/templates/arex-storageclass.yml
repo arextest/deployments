@@ -3,4 +3,5 @@ kind: StorageClass
 metadata:
   name: arex-local-storage
 provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
+#volumeBindingMode: WaitForFirstConsumer
