@@ -1,11 +1,11 @@
 #!/bin/bash
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
   echo "Input version please! e.g. 0.2.1"
   exit
 fi
 
-if [ $2 -eq "-origin" ]
+if [ "$2" -eq "-origin" ]
 then
     echo "Push version:$1"
     docker push arexadmin01/arex:$1

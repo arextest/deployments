@@ -1,3 +1,12 @@
+## Sidecar Config
+
+### AREX Sidecar
+```
+https://hub.docker.com/repository/docker/arexadmin01/arex-agent-sidecar
+```
+
+### Sidecar config demo:
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -51,3 +60,4 @@ spec:
       volumes:
         - name: arex-agent
           emptyDir: {}
+```
