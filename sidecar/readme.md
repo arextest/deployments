@@ -5,7 +5,16 @@
 https://hub.docker.com/repository/docker/arexadmin01/arex-agent-sidecar
 ```
 
-### Sidecar config demo:
+### arex sidecar docker file
+```yaml
+FROM busybox
+ENV LANG=C.UTF-8
+RUN set -eux && mkdir -p /usr/arex/agent
+ADD ./arex-agent-*.jar /usr/arex/agent/
+WORKDIR /
+```
+
+### Sidecar config demo: deployment.yaml
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
