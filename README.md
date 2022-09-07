@@ -56,3 +56,8 @@ storage-nginx    /docker-entrypoint.sh ngin ...   Up      80/tcp, 0.0.0.0:8093->
 ```
 
 
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
