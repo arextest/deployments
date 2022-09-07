@@ -2,7 +2,7 @@
 if [ $# -lt 2 ]
 then
   echo "Input version please! e.g. 0.2.1"
-  exit()
+  exit
 fi
 
 if [ $2 -eq "-origin" ]
