@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arex-configmap
+data:
+  myvalue: "justdemo"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arex-mongodb-configs
+data:
+  mongo-allone-init.js: |
+    db = db.getSiblingDB("arex_storage_db");
+    db.createUser({
+      user: "arex",
+      pwd: "iLoveArex",
+      roles: [{ role: "readWrite", db: "arex_storage_db" }],
+    });

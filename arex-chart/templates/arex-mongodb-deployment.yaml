@@ -1,0 +1,77 @@
+{{- if .Values.mongodb.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.mongodb.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.mongodb.fullname" . }}
+spec:
+  replicas: {{ .Values.mongodb.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}
+  template:
+    metadata:
+    {{- if .Values.mongodb.podAnnotations }}
+      annotations:
+{{ toYaml .Values.mongodb.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}
+        component: "{{ .Values.mongodb.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.mongodb.name }}
+          image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
+          imagePullPolicy: "{{ .Values.mongodb.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.mongodb.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: citizix
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: S3cret
+            - name: MONGO_INITDB_DATABASE
+              value: rootdb
+            - name: MONGO_USERNAME
+              value: arex
+            - name: MONGO_PASSWORD
+              value: iLoveArex
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
+            - name: settings
+              mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+              subPath: mongo-allone-init.js
+          resources:
+{{ toYaml .Values.mongodb.resources | indent 12 }}
+    {{- if .Values.mongodb.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mongodb.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.mongodb.tolerations }}
+      tolerations:
+{{ toYaml .Values.mongodb.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.mongodb.affinity }}
+      affinity:
+{{ toYaml .Values.mongodb.affinity | indent 8 }}
+    {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:            
+            claimName: arex-mongodb-pvc
+        - name: settings
+          configMap:
+            name: arex-mongodb-configs
+{{- end }}
+
