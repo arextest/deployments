@@ -1,0 +1,56 @@
+{{- if .Values.schedule.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.schedule.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "arex.schedule.fullname" . }}
+spec:
+  replicas: {{ .Values.schedule.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+  template:
+    metadata:
+    {{- if .Values.schedule.podAnnotations }}
+      annotations:
+{{ toYaml .Values.schedule.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+        component: "{{ .Values.schedule.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "arex.name" . }}-{{ .Values.schedule.name }}
+          image: "{{ .Values.registerPre }}{{ .Values.schedule.image.repository }}:{{ .Values.schedule.image.tag }}"
+          imagePullPolicy: "{{ .Values.schedule.image.pullPolicy }}"
+          args:
+          {{- range $key, $value := .Values.schedule.extraArgs }}
+            - --{{ $key }}={{ $value }}
+          {{- end }}
+          env:
+            - name: JAVA_OPTS
+              value: -Dmongo.uri=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db  -Darex.config.service.url=http://{{ template "arex.config.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.config.service.servicePort }} -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} -Darex.report.service.url=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}
+          ports:
+            - containerPort: {{ .Values.schedule.service.servicePort }}
+          resources:
+{{ toYaml .Values.schedule.resources | indent 12 }}
+    {{- if .Values.schedule.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.schedule.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.schedule.tolerations }}
+      tolerations:
+{{ toYaml .Values.schedule.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.schedule.affinity }}
+      affinity:
+{{ toYaml .Values.schedule.affinity | indent 8 }}
+    {{- end }}
+{{- end }}
+

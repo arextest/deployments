@@ -1,0 +1,202 @@
+rbac:
+  create: false
+
+nameOverride: ""
+fullnameOverride: ""
+# register prefix
+registerPre: "arexadmin01/"
+# registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
+
+front:
+  enabled: true
+  name: ui
+  image:
+    repository: arex
+    tag: 0.2
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8088
+    type: ClusterIP
+
+  ingress:
+    enabled: true
+    annotations: {}
+    hosts: ["demo.arextext.com"]
+    tls: ""
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+config:
+  enabled: true
+  name: config
+  image: 
+    repository: arex-config
+    tag: 0.2
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8091
+    type: ClusterIP
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  selector: {}
+
+storage:
+  enabled: true
+  name: storage
+  image:
+    repository: arex-storage-serive
+    tag: 0.2
+    pullPolicy: IfNotPresent
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+  replicaCount: 2
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8093
+    type: ClusterIP
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+report:
+  enabled: true
+  name: report
+  image:
+    repository: arex-report
+    tag: 0.2
+    pullPolicy: IfNotPresent
+
+  serviceAcountName: default
+  extraArgs: {}
+  prefixURL: ""
+  baseURL: ""
+
+  replicaCount: 1
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8090
+    type: ClusterIP
+
+  resources: {}
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+
+schedule:
+  enabled: true
+  name: schedule
+  image:
+    repository: arex-replay-schedule
+    tag: 0.2
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 8092
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
+mongodb:
+  enabled: true
+  name: mongodb
+  image:
+    repository: mongodb
+    tag: 5.0
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 27017
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
+
+redis:
+  enabled: true
+  name: redis
+  image:
+    repository: redis
+    tag: 6.2.6
+    pullPolicy: IfNotPresent
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 6379
+    type: ClusterIP
+
+  nodeSelector: {}
+  podAnnotations: {}
+  tolerations: {}
+  resources: {}
