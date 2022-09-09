@@ -16,14 +16,13 @@ Then, you could query the arex services such as
 [~ deployments]# docker-compose ps
     Name                   Command               State                 Ports              
 ------------------------------------------------------------------------------------------
-arex-config     catalina.sh run                  Up      0.0.0.0:8091->8080/tcp           
-arex-front      docker-entrypoint.sh node  ...   Up      0.0.0.0:8088->8080/tcp           
-arex-mongodb    docker-entrypoint.sh --auth      Up      0.0.0.0:27017->27017/tcp         
-arex-mysql      docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp, 33060/tcp
-arex-redis      docker-entrypoint.sh --app ...   Up      0.0.0.0:6379->6379/tcp           
-arex-report     catalina.sh run                  Up      0.0.0.0:8090->8080/tcp           
-arex-schedule   catalina.sh run                  Up      0.0.0.0:8092->8080/tcp           
-arex-storage    catalina.sh run                  Up      0.0.0.0:8093->8080/tcp  
+arex-front      docker-entrypoint.sh node  ...   Up      0.0.0.0:8088->8080/tcp  
+arex-report     catalina.sh run                  Up      0.0.0.0:8090->8080/tcp  
+arex-config     catalina.sh run                  Up      0.0.0.0:8091->8080/tcp  
+arex-schedule   catalina.sh run                  Up      0.0.0.0:8092->8080/tcp  
+arex-storage    catalina.sh run                  Up      0.0.0.0:8093->8080/tcp 
+arex-mongodb    docker-entrypoint.sh --auth      Up      0.0.0.0:27017->27017/tcp
+arex-redis      docker-entrypoint.sh --app ...   Up      0.0.0.0:6379->6379/tcp  
 ```
 ## AREX multi-instance install 
 AREX provide docker-compose-distribute.yml to install with docker compose.
@@ -44,7 +43,6 @@ Then, you could query the arex services such as
 arex-config      catalina.sh run                  Up      0.0.0.0:8091->8080/tcp           
 arex-front       docker-entrypoint.sh node  ...   Up      0.0.0.0:8088->8080/tcp           
 arex-mongodb     docker-entrypoint.sh --auth      Up      0.0.0.0:27017->27017/tcp         
-arex-mysql       docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp, 33060/tcp
 arex-redis       docker-entrypoint.sh --app ...   Up      0.0.0.0:6379->6379/tcp           
 arex-report      catalina.sh run                  Up      0.0.0.0:8090->8080/tcp           
 arex-schedule1   catalina.sh run                  Up      0.0.0.0:10092->8080/tcp          
