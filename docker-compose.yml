@@ -37,7 +37,7 @@ services:
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://arex:8088      
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://10.5.153.1:8088
     depends_on:
       - mongodb  
   arex-storage-service:
