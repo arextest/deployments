@@ -37,7 +37,7 @@ services:
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://10.5.153.1:8088
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://arex:8088      
     depends_on:
       - mongodb  
   arex-storage-service:
@@ -71,7 +71,7 @@ services:
     container_name: arex-mongodb
     restart: always
     ports:
-      - 27017:27017
+      - 37017:27017
     volumes:
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -89,7 +89,7 @@ services:
     restart: always
     command: --appendonly yes
     ports:
-      - 6379:6379
+      - 16379:6379
     volumes:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
