@@ -2,7 +2,7 @@ version: "3"
 
 services:
   arex:
-    image: arexadmin01/arex:0.2.3
+    image: arexadmin01/arex:0.2.4
     container_name: arex-front
     restart: always
     ports:
@@ -11,25 +11,13 @@ services:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
-      - SERVICE_CONFIG_URL= http://arex-config-service:8080
+      - SERVICE_CONFIG_URL= http://arex-report-service:8080
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
     depends_on:
-      - arex-report-service
-      - arex-config-service  
-  arex-config-service:
-    image: arexadmin01/arex-config:0.2.3
-    container_name: arex-config
-    restart: always
-    ports:
-      - '8091:8080'
-    volumes:
-      - ./arex-logs/arex-config:/usr/local/tomcat/logs
-    environment:
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db
-    depends_on:
-      - mongodb
+      - arex-report-servic
+      - arex-schedule-service
   arex-report-service:
-    image: arexadmin01/arex-report:0.2.3
+    image: arexadmin01/arex-report:0.2.4
     container_name: arex-report
     restart: always
     ports:
@@ -37,11 +25,11 @@ services:
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.config.service.url=http://arex-config-service:8080 -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://10.5.153.1:8088
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.storage.service.url=http://arex-storage-service:8080 -Darex.ui.url=http://arex:8080
     depends_on:
       - mongodb  
   arex-storage-service:
-    image: arexadmin01/arex-storage-serive:0.2.3
+    image: arexadmin01/arex-storage-serive:0.2.4
     container_name: arex-storage
     restart: always
     ports:
@@ -54,7 +42,7 @@ services:
       - mongodb
       - redis
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:0.2.3
+    image: arexadmin01/arex-replay-schedule:0.2.4
     container_name: arex-schedule
     restart: always
     ports:
@@ -62,7 +50,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
     environment:
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080 -Darex.config.service.api=http://arex-config-service:8080
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.storage.service.api=http://arex-storage-service:8080 -Darex.report.service.api=http://arex-report-service:8080
     depends_on:
       - mongodb
       - redis

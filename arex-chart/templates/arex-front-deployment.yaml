@@ -36,8 +36,6 @@ spec:
           env:
             - name: SERVICE_REPORT_URL
               value: http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}  
-            - name: SERVICE_CONFIG_URL
-              value: http://{{ template "arex.config.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.config.service.servicePort }}  
             - name: SERVICE_SCHEDULE_URL
               value: http://{{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.schedule.service.servicePort }}  
           ports:

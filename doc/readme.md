@@ -60,8 +60,6 @@ AREX: AREX is a “Differential Testing” and “Record and Replay Testing” T
 
 ## areXTest basics
 
-### areXTest config
-
 ### arexTest schedule
 
 ## Best practices
@@ -89,7 +87,6 @@ docker-compose up -d
 ```
 arex.service.name=spring-petclinc-old
 arex.storage.service.host=10.3.2.42:8093
-arex.config.service.host=10.3.2.42:8091
 ```
 
 #### Run spring-petclinic old version
@@ -161,22 +158,6 @@ docker run  -v "$PWD":/usr/src/arex --rm -p 8088:8080 --name petclinic-new   -w 
 - Then, Clicking the "details", you will see the replaying logs and result.
   ![case diff detail](./images/case-diff-detail.png)
   ![case diff detail 2](./images/case-diff-detail2.png)
-
-### areXTest configs
-
-- Visit areXTest config
-  ![config](./images/config.png)
-- Config application record options
-  - config record basic options
-    ![config record basic](./images/config-record-basic.png)
-  - config record advance options
-    ![config record advanced](./images/config-record-advanced.png)
-- Config application replay options
-  ![config replay](./images/config-replay.png)
-- Config application Diff options
-  ![config diff](./images/config-diff.png)
-- Your cann import or export all Configration by YAML file
-  ![config yaml](./images/config-yaml.png)
 
 ## Permissions
 

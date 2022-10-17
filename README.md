@@ -46,7 +46,6 @@ AREX is under development now.
 
 - Be testing Application: http://YourAppHostIP:8080/
 - Visit AREX UI: http://ArexHostIP:8088/
-  - Config application
   - Replay record
   - Analysis Result
 
@@ -63,7 +62,6 @@ docker compose up -d
 - Method: Set Env
   - service.name=yourAppName; Config your Application Name
   - storage.service.host=YIP:8093; YIP is IP address of you AREX HOST
-  - config.service.host=YIP:8091;
 
 ```
 export JAVA_TOOL_OPTIONS="-javaagent:/root/arex/spring-petclinic/arex-java-0.0.1.jar=service.name=myown-spring-petclinc"
@@ -73,7 +71,7 @@ export JAVA_TOOL_OPTIONS="-javaagent:/root/arex/spring-petclinic/arex-java-0.0.1
 If you use to [Spring-Petclinic](https://github.com/spring-projects/spring-petclinic) try
 
 ```
-export JAVA_TOOL_OPTIONS="-javaagent:./arex-devops/agent/arex-agent-0.0.1.jar=service.name=yourAppName;storage.service.host=YIP:8093;config.service.host=YIP:8091"
+export JAVA_TOOL_OPTIONS="-javaagent:./arex-devops/agent/arex-agent-0.0.1.jar=service.name=yourAppName;storage.service.host=YIP:8093"
 ```
 
 - Run with Docker

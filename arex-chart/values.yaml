@@ -43,38 +43,6 @@ front:
   podAnnotations: {}
   tolerations: {}
 
-config:
-  enabled: true
-  name: config
-  image: 
-    repository: arex-config
-    tag: 0.2
-    pullPolicy: IfNotPresent
-
-  serviceAcountName: default
-  extraArgs: {}
-  prefixURL: ""
-  baseURL: ""
-
-  replicaCount: 1
-  service:
-    annotations: {}
-    labels: {}
-
-    clusterIP: ""
-    externalIPs: []
-
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: []
-    servicePort: 8091
-    type: ClusterIP
-
-  resources: {}
-  nodeSelector: {}
-  podAnnotations: {}
-  tolerations: {}
-  selector: {}
-
 storage:
   enabled: true
   name: storage

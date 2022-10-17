@@ -36,11 +36,6 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s-%s" .Release.Name $name .Values.front.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "arex.config.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.config.name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "arex.storage.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s-%s" .Release.Name $name .Values.storage.name | trunc 63 | trimSuffix "-" -}}
