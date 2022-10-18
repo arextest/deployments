@@ -1,11 +1,13 @@
 ## Sidecar Config
 
 ### AREX Sidecar
+
 ```
 https://hub.docker.com/repository/docker/arexadmin01/arex-agent-sidecar
 ```
 
 ### arex sidecar docker file
+
 ```yaml
 FROM busybox
 ENV LANG=C.UTF-8
@@ -15,6 +17,7 @@ WORKDIR /
 ```
 
 ### Sidecar config demo: deployment.yaml
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -49,7 +52,7 @@ spec:
               protocol: TCP
           env:
             - name: JAVA_TOOL_OPTIONS
-              value: -javaagent:/usr/arex/agent/arex-agent-0.1.0.jar -Darex.service.name=your-service-name -Darex.storage.service.host=10.0.0.1:8093 -Darex.config.service.host=10.0.0.1:8091
+              value: -javaagent:/usr/arex/agent/arex-agent-0.1.0.jar -Darex.service.name=your-service-name -Darex.storage.service.host=10.0.0.1:8093
           volumeMounts:
             - name: arex-agent
               mountPath: /usr/arex/agent

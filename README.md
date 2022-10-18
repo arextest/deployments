@@ -1,5 +1,6 @@
 # AREX: It is a “Differential Testing” and “Record and Replay Testing” Tool.
 
+- AREX [Document](https://arextest.github.io/arex-doc/)
 - Test restful API by record, replay and stub request/response.
 - Differential testing known as differential fuzzing, is a popular software testing technique that attempts to detect bugs, by providing the same input to a series of similar applications and observing differences in their execution.
 
