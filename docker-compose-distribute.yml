@@ -17,7 +17,7 @@ services:
     depends_on:
       - arex-report-service
       - arex-schedule-service
-        - arex-storage-service
+      - arex-storage-service
   arex-report-service:
     image: arexadmin01/arex-report:0.2.4
     container_name: arex-report
