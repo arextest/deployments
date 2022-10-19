@@ -52,7 +52,7 @@ services:
     volumes:
       - ./arex-logs/arex-storage2:/usr/local/tomcat/logs
     environment:
-      - "JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db"
+      - "JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db -Darex.report.service.api=http://arex-report-service:8080"
     depends_on:
       - mongodb
       - redis
