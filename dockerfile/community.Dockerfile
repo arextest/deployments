@@ -7,7 +7,8 @@ WORKDIR /usr/local/tomcat/conf
 RUN sed -i 'N;152a\\t<Context path="" docBase="arex-agent-test-0.0.1-SNAPSHOT" reloadable="true" />' server.xml
 
 #RUN set -eux && mkdir -p /usr/arex/agent
-ADD ./arex-agent-*.jar /usr/local/tomcat/
+ADD ./arex-agent-0.1.0.jar /usr/local/tomcat/
+ADD ./arex-agent-bootstrap-0.1.0.jar /usr/local/tomcat/
 
 WORKDIR /usr/local/tomcat
 EXPOSE 8080
