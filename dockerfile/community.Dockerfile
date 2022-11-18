@@ -1,6 +1,6 @@
 FROM tomcat:9.0-jdk8-openjdk
 
-ARG WAR_FILE=./arex-community-test/target/arex-agent-test-0.0.1-SNAPSHOT.war
+ARG WAR_FILE=./target/arex-agent-test-0.0.1-SNAPSHOT.war
 ADD $WAR_FILE /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/conf
