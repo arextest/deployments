@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  arex-community-test:
+    image: arexadmin01/arex-community-test:0.0.1
+    container_name: arex-commnity-test
+    restart: always
+    ports:
+      - '18080:8080'
+    volumes:
+      - ./arex-community/logs/community:/usr/local/tomcat/logs
+    environment:
+      - "JAVA_OPTS=-Djavaagent:/usr/arex/agent/arex-agent.jar -Darex.service.name=arex-Community-Test -Darex.storage.service.host=10.5.153.1:8093 -Darex.enable.debug=true -Dspring.datasource.url=jdbc:mysql://mysql:3306/community?useUnicode=true&characterEncoding=utf-8 -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=redis -Dspring.redis.port=6379"
+    depends_on:
+      - mysql
+      - redis
+  mysql:
+    image: mysql:8.0.29
+    container_name: community-mysql
+    restart: always
+    ports:
+      - 13306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=arex_admin
+      - MYSQL_PASSWORD=arex_admin_password
+      - MYSQL_DATABASE=community
+    volumes:
+      - ./community_init/:/docker-entrypoint-initdb.d/
+      - ./conf.d:/etc/mysql/conf.d:ro
+      - ./arex-community/mysql:/var/lib/mysql
+      - ./arex-community/logs/mysql:/var/log/mysql.log
+  redis:
+    image: redis:6.2.6
+    container_name: community-redis
+    restart: always
+    command: --appendonly yes
+    ports:
+      - 16379:6379
+    volumes:
+      - ./arex-community/redis:/data
+      - ./arex-community/logs/redis:/var/log/redis
