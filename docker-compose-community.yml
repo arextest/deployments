@@ -50,4 +50,4 @@ services:
 
 networks:
   community:
-    external: true
+    driver: bridge
