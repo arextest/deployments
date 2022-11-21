@@ -12,7 +12,7 @@ services:
     volumes:
       - ./arex-community/logs/community:/usr/local/tomcat/logs
     environment:
-      - JAVA_OPTS=-Djavaagent:/usr/local/tomcat/arex-agent-0.1.0.jar -Darex.service.name=arex-Community-Test -Darex.storage.service.host=10.5.153.1:8093 -Darex.enable.debug=true -Dspring.datasource.url="jdbc:mysql://cmysql:3306/community?useUnicode=true&characterEncoding=utf-8" -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=credis -Dspring.redis.port=6379
+      - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.1.0.jar' -Darex.service.name=arex-community-test -Darex.storage.service.host=10.5.153.1:8093 -Darex.enable.debug=true  -Dspring.datasource.url=jdbc:mysql://cmysql:3306/community?useUnicode=true&characterEncoding=utf-8 -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=credis -Dspring.redis.port=6379
     depends_on:
       - cmysql
       - credis
