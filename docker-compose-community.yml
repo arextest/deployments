@@ -4,6 +4,8 @@ services:
   arex-community-test:
     image: arexadmin01/arex-community-test:0.0.1
     container_name: arex-commnity-test
+    privileged: true
+    user: "root"
     networks:
       - community
     restart: always
@@ -19,6 +21,8 @@ services:
   cmysql:
     image: mysql:8.0.29
     container_name: community-mysql
+    privileged: true
+    user: "root"
     networks:
       - community
     restart: always
@@ -38,6 +42,8 @@ services:
   credis:
     image: redis:6.2.6
     container_name: community-redis
+    privileged: true
+    user: "root"
     networks:
       - community
     restart: always
