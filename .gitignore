@@ -39,3 +39,7 @@ arex-logs/
 config.d/
 elk/filebeat/data/
 elk/elasticsearch/data/
+community-test/arex-community/logs/
+community-test/arex-community/mysql/
+community-test/arex-community/redis/
+
