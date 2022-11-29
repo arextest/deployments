@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -lt 1 ]
 then
-  echo "Input version please! e.g. 0.2.4............."
+  echo "Input version please! e.g. 0.2.5............."
   exit
 fi
 
