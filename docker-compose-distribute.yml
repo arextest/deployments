@@ -2,7 +2,7 @@ version: "3"
 
 services:
   arex:
-    image: arexadmin01/arex:0.2.4
+    image: arexadmin01/arex:0.2.5
     container_name: arex-front
     restart: always
     ports:
@@ -19,7 +19,7 @@ services:
       - arex-schedule-service
       - arex-storage-service
   arex-report-service:
-    image: arexadmin01/arex-report:0.2.4
+    image: arexadmin01/arex-report:0.2.5
     container_name: arex-report
     restart: always
     ports:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - mongodb  
   arex-storage-service1:
-    image: arexadmin01/arex-storage-serive:0.2.4
+    image: arexadmin01/arex-storage-serive:0.2.5
     container_name: arex-storage1
     restart: always
     ports:
@@ -44,7 +44,7 @@ services:
       - mongodb
       - redis
   arex-storage-service2:
-    image: arexadmin01/arex-storage-serive:0.2.4
+    image: arexadmin01/arex-storage-serive:0.2.5
     container_name: arex-storage2
     restart: always
     ports:
@@ -68,7 +68,7 @@ services:
       - arex-storage-service1
       - arex-storage-service2
   arex-schedule-service1:
-    image: arexadmin01/arex-replay-schedule:0.2.4
+    image: arexadmin01/arex-replay-schedule:0.2.5
     container_name: arex-schedule1
     restart: always
     ports:
@@ -81,7 +81,7 @@ services:
       - mongodb
       - redis
   arex-schedule-service2:
-    image: arexadmin01/arex-replay-schedule:0.2.4
+    image: arexadmin01/arex-replay-schedule:0.2.5
     container_name: arex-schedule2
     restart: always
     ports:
