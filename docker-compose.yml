@@ -24,7 +24,7 @@ services:
     container_name: arex-node
     restart: always
     ports:
-      - '8088:3000'
+      - '10001:3000'
     volumes:
       - ./arex-logs/arex-node:/usr/src/app/logs
   arex-report-service:
