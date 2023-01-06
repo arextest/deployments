@@ -1,10 +1,6 @@
 # AREX: It is a “Differential Testing” and “Record and Replay Testing” Tool.
 
-- AREX [Document](https://arextest.github.io/arex-doc/)
-- Test restful API by record, replay and stub request/response.
-- Differential testing known as differential fuzzing, is a popular software testing technique that attempts to detect bugs, by providing the same input to a series of similar applications and observing differences in their execution.
-
-## AREX Docker-Compose Install
+## AREX install
 
 ```
 git clone https://github.com/arextest/deployments.git
@@ -12,7 +8,7 @@ cd deployments
 docker compose up -d
 ```
 
-## AREX Docker-Compose Uninstall
+## AREX uninstall
 
 ```
 cd deployments
@@ -21,6 +17,22 @@ docker compose down -v
 rm -rf ./arex-data
 <!-- Delete arex logs. If you want to save the data, You should ignore the command. -->
 rm -rf ./arex-logs
+```
+
+## AREX Compile and build(Docker)
+
+- clone arex code to local
+
+```
+git clone https://github.com/arextest/deployments.git
+cd deployments
+docker compose up -d
+```
+
+- build Docker
+
+```
+
 ```
 
 ## License
