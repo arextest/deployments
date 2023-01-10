@@ -21,18 +21,39 @@ rm -rf ./arex-logs
 
 ## AREX Compile and build(Docker)
 
-- clone arex code to local
+- clone arex code to local. then build Docker.
 
 ```
+git clone https://github.com/arextest/arex-agent-java.git
+git clone https://github.com/arextest/arex.git arex-front-end
+git clone https://github.com/arextest/arex-node-service.git
+git clone https://github.com/arextest/arex-report.git
+git clone https://github.com/arextest/arex-storage.git
+git clone https://github.com/arextest/arex-replay-schedule.git
+git clone https://github.com/arextest/arex-commuty-test.git
 git clone https://github.com/arextest/deployments.git
 cd deployments
+git checkout dev
+```
+
+- 编译 AREX 前端 ./front.build.sh
+- 编译 node 服务 ./node.build.sh
+- 编译 report 服务 ./report.build.sh
+- 编译 storage 服务 ./storage.build.sh
+- 编译 schedule 服务 ./schedule.build.sh
+- 编译 arex agent
+
+```
+cd arex-agent-java
+mvn clean package
+```
+
+- 编译 community-test 工具 ./community.build.sh
+- 运行 AREX: Docker-Compose
+
+```
+cd deployments
 docker compose up -d
-```
-
-- build Docker
-
-```
-
 ```
 
 ## License
