@@ -6,10 +6,6 @@ receivers:
 
 
 exporters:
-  skywalking:
-    endpoint: "10.5.153.151:11800"
-    tls:
-      insecure: true  
   jaeger:
     endpoint: jaeger:14250
     tls:
@@ -37,7 +33,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [jaeger, logging, zipkin, skywalking]
+      exporters: [jaeger, logging, zipkin, opencensus]
       processors: [batch]
     metrics:
       receivers: [otlp]
