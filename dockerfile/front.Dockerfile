@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 # COPY package*.json ./
 COPY . .
-RUN npm install  --loglevel verbose
 RUN npm run build
 
 # Bundle app event
