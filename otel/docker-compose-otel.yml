@@ -104,8 +104,6 @@ services:
     container_name: arex-commnity-test
     privileged: true
     user: "root"
-    networks:
-      - community
     restart: always
     ports:
       - '18080:8080'
