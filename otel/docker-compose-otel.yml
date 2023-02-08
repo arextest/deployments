@@ -130,8 +130,6 @@ services:
     container_name: community-mysql
     privileged: true
     user: "root"
-    networks:
-      - community
     restart: always
     ports:
       - 13306:3306
