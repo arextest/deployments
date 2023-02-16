@@ -69,7 +69,7 @@ services:
       - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151/v1/traces
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
       - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
       - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
       - OTEL_SERVICE_NAME=SERVICE_STORAGE
@@ -111,7 +111,7 @@ services:
       - ./arex-community/logs/community:/usr/local/tomcat/logs
       - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
     environment:
-      - JAVA_TOOL_OPTIONS=-javaagent:/usr/local/tomcat/arex-agent-0.1.0.jar -Darex.service.name=community-otel -Darex.storage.service.host=arex-storage-service:8080 -Darex.enable.debug=true  -Dspring.datasource.url=jdbc:mysql://cmysql:3306/community?useUnicode=true&characterEncoding=utf-8 -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=redis -Dspring.redis.port=6379
+      - JAVA_TOOL_OPTIONS=-javaagent:/usr/local/tomcat/arex-agent-0.1.0.jar -javaagent:/shared/opentelemetry-javaagent.jar -Darex.service.name=community-otel -Darex.storage.service.host=arex-storage-service:8080 -Darex.enable.debug=true  -Dspring.datasource.url=jdbc:mysql://cmysql:3306/community?useUnicode=true&characterEncoding=utf-8 -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=redis -Dspring.redis.port=6379
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
