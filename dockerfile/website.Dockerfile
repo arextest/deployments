@@ -1,4 +1,4 @@
-FROM node:14.18.1
+FROM node:lts-alpine3.17
 
 # Create app directory
 WORKDIR /usr/arex/home
