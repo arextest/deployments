@@ -2,7 +2,7 @@ cd ../arex-replay-schedule
 mvn clean package -DskipTests
 
 cp ../deployments/dockerfile/schedule.Dockerfile ./Dockerfile
-docker build -t  arexadmin01/arex-replay-schedule:0.2.6  .
+docker build -t  arexadmin01/arex-replay-schedule:0.2.7  .
 rm -rf ./Dockerfile
 
 cd ..
