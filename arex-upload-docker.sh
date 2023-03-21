@@ -13,19 +13,19 @@ docker push arexadmin01/arex-storage-serive:$1
 docker push arexadmin01/arex-replay-schedule:$1
 docker push arexadmin01/arex-community-test:0.0.1
 
-echo "upload to aliyun:$1"
-docker tag arexadmin01/arex:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex:$1 
-docker tag arexadmin01/arex-node:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-node:$1 
-docker tag arexadmin01/arex-report:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-report:$1 
-docker tag arexadmin01/arex-storage-serive:$1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-storage-serive:$1   
-docker tag arexadmin01/arex-replay-schedule:$1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-replay-schedule:$1 
-docker tag arexadmin01/arex-community-test:0.0.1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-community-test:0.0.1
+# echo "upload to aliyun:$1"
+# docker tag arexadmin01/arex:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex:$1 
+# docker tag arexadmin01/arex-node:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-node:$1 
+# docker tag arexadmin01/arex-report:$1  registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-report:$1 
+# docker tag arexadmin01/arex-storage-serive:$1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-storage-serive:$1   
+# docker tag arexadmin01/arex-replay-schedule:$1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-replay-schedule:$1 
+# docker tag arexadmin01/arex-community-test:0.0.1 registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-community-test:0.0.1
 
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex:$1
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-report:$1
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-node:$1
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-storage-serive:$1
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-replay-schedule:$1
-docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-community-test:0.0.1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex:$1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-report:$1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-node:$1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-storage-serive:$1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-replay-schedule:$1
+# docker push registry.cn-hangzhou.aliyuncs.com/arexadmin01/arex-community-test:0.0.1
 
 
