@@ -26,7 +26,6 @@ rm -rf ./arex-logs
 ```
 git clone https://github.com/arextest/arex-agent-java.git
 git clone https://github.com/arextest/arex.git arex-front-end
-git clone https://github.com/arextest/arex-node-service.git
 git clone https://github.com/arextest/arex-report.git
 git clone https://github.com/arextest/arex-storage.git
 git clone https://github.com/arextest/arex-replay-schedule.git

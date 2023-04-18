@@ -11,22 +11,12 @@ services:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
-      - SERVICE_NODE_URL=http://arex-node:3000
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
       - arex-report-service
       - arex-schedule-service
       - arex-storage-service
-      - arex-node
-  arex-node:
-    image: arexadmin01/arex-node:0.2.8
-    container_name: arex-node
-    restart: always
-    ports:
-      - '10001:3000'
-    volumes:
-      - ./arex-logs/arex-node:/usr/src/app/logs
   arex-report-service:
     image: arexadmin01/arex-report:0.2.8
     container_name: arex-report
