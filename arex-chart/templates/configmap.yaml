@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: arex-configmap
 data:
-  myvalue: "justdemo"
+  myvalue: "just-demo"
 ---
 apiVersion: v1
 kind: ConfigMap

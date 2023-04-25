@@ -51,6 +51,11 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s-%s" .Release.Name $name .Values.schedule.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "arex.node.fullname" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.node.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "arex.mongodb.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s-%s" .Release.Name $name .Values.mongodb.name | trunc 63 | trimSuffix "-" -}}

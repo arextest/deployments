@@ -1,36 +1,36 @@
-{{- if .Values.front.enabled -}}
+{{- if .Values.node.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ template "arex.name" . }}-{{ .Values.front.name }}
+    app: {{ template "arex.name" . }}-{{ .Values.node.name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    component: "{{ .Values.front.name }}"
+    component: "{{ .Values.node.name }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ template "arex.front.fullname" . }}
+  name: {{ template "arex.node.fullname" . }}
 spec:
-  replicas: {{ .Values.front.replicaCount }}
+  replicas: {{ .Values.node.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "arex.name" . }}-{{ .Values.front.name }}
+      app: {{ template "arex.name" . }}-{{ .Values.node.name }}
   template:
     metadata:
-    {{- if .Values.front.podAnnotations }}
+    {{- if .Values.node.podAnnotations }}
       annotations:
-{{ toYaml .Values.front.podAnnotations | indent 8 }}
+{{ toYaml .Values.node.podAnnotations | indent 8 }}
     {{- end }}
       labels:
-        app: {{ template "arex.name" . }}-{{ .Values.front.name }}
-        component: "{{ .Values.front.name }}"
+        app: {{ template "arex.name" . }}-{{ .Values.node.name }}
+        component: "{{ .Values.node.name }}"
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ template "arex.name" . }}-{{ .Values.front.name }}
-          image: "{{ .Values.registerPre }}{{ .Values.front.image.repository }}:{{ .Values.front.image.tag }}"
-          imagePullPolicy: "{{ .Values.front.image.pullPolicy }}"
+        - name: {{ template "arex.name" . }}-{{ .Values.node.name }}
+          image: "{{ .Values.registerPre }}{{ .Values.node.image.repository }}:{{ .Values.node.image.tag }}"
+          imagePullPolicy: "{{ .Values.node.image.pullPolicy }}"
           args:
-          {{- range $key, $value := .Values.front.extraArgs }}
+          {{- range $key, $value := .Values.node.extraArgs }}
             - --{{ $key }}={{ $value }}
           {{- end }}
           env:
@@ -43,20 +43,20 @@ spec:
             - name: SERVICE_STORAGE_URL
               value: http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }}  
           ports:
-            - containerPort: {{ .Values.front.service.servicePort }}
+            - containerPort: {{ .Values.node.service.servicePort }}
           resources:
-{{ toYaml .Values.front.resources | indent 12 }}
-    {{- if .Values.front.nodeSelector }}
+{{ toYaml .Values.node.resources | indent 12 }}
+    {{- if .Values.node.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.front.nodeSelector | indent 8 }}
+{{ toYaml .Values.node.nodeSelector | indent 8 }}
     {{- end }}
-    {{- if .Values.front.tolerations }}
+    {{- if .Values.node.tolerations }}
       tolerations:
-{{ toYaml .Values.front.tolerations | indent 8 }}
+{{ toYaml .Values.node.tolerations | indent 8 }}
     {{- end }}
-    {{- if .Values.front.affinity }}
+    {{- if .Values.node.affinity }}
       affinity:
-{{ toYaml .Values.front.affinity | indent 8 }}
+{{ toYaml .Values.node.affinity | indent 8 }}
     {{- end }}
 {{- end }}
 
