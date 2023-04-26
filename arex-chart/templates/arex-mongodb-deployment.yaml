@@ -47,8 +47,10 @@ spec:
           ports:
             - containerPort: 27017
           volumeMounts:
-            - name: data
+            - name: mongo-data
               mountPath: /data/db
+            - name: mongo-logs
+              moutePath: /var/log/mongodb
             - name: settings
               mountPath: /docker-entrypoint-initdb.d/mongo-init.js
               subPath: mongo-allone-init.js
@@ -67,9 +69,12 @@ spec:
 {{ toYaml .Values.mongodb.affinity | indent 8 }}
     {{- end }}
       volumes:
-        - name: data
+        - name: mongo-data
           persistentVolumeClaim:            
             claimName: arex-mongodb-pvc
+        - name: mongo-logs
+          persistentVolumeClaim:            
+            claimName: arex-mongodb-logs
         - name: settings
           configMap:
             name: arex-mongodb-configs

@@ -36,8 +36,10 @@ spec:
           ports:
             - containerPort: 6379
           volumeMounts:
-            - name: data
+            - name: redis-data
               mountPath: /data
+            - name: redis-logs
+              mountPath: /var/log/redis
           resources:
 {{ toYaml .Values.redis.resources | indent 12 }}
     {{- if .Values.redis.nodeSelector }}
@@ -53,8 +55,11 @@ spec:
 {{ toYaml .Values.redis.affinity | indent 8 }}
     {{- end }}
       volumes:
-        - name: data
-          persistentVolumeClaim:            
+        - name: redis-data
+          persistentVolumeClaim:      
             claimName: arex-redis-pvc      
+        - name: redis-logs
+          persistentVolumeClaim:            
+            claimName: arex-redis-logs
 {{- end }}
 
