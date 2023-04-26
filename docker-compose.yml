@@ -42,6 +42,7 @@ services:
         -Darex.ui.url=http://arex:8080
     depends_on:
       - mongodb  
+      - redis
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:0.2.8
     container_name: arex-storage
