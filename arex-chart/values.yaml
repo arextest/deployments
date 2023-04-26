@@ -165,6 +165,7 @@ mongodb:
     repository: mongodb
     tag: 5.0
     pullPolicy: IfNotPresent
+  replicaCount: 1
   service:
     annotations: {}
     labels: {}
@@ -188,6 +189,7 @@ redis:
     repository: redis
     tag: 6.2.6
     pullPolicy: IfNotPresent
+  replicaCount: 1
   service:
     annotations: {}
     labels: {}
