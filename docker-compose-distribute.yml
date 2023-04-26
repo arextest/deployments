@@ -18,6 +18,7 @@ services:
       - arex-report-service
       - arex-schedule-service
       - arex-storage-service
+      - arex-node
   arex-node:
     image: arexadmin01/arex-node:0.2.7
     container_name: arex-node
