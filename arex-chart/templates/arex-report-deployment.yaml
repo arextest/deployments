@@ -35,7 +35,8 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -Dmongo.uri=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db  -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} -Darex.ui.url=http://{{ template "arex.front.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.front.service.servicePort }}
+              value: -Dmongo.uri=mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db  -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} -Darex.ui.url=http://{{ template "arex.front.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.front.service.servicePort }}
+              # value: -Dmongo.uri=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db  -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} -Darex.ui.url=http://{{ template "arex.front.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.front.service.servicePort }}
           ports:
             - containerPort: {{ .Values.report.service.servicePort }}
           resources:
