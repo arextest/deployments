@@ -50,7 +50,7 @@ spec:
             - name: mongo-data
               mountPath: /data/db
             - name: mongo-logs
-              moutePath: /var/log/mongodb
+              mountPath: /var/log/mongodb
             - name: settings
               mountPath: /docker-entrypoint-initdb.d/mongo-init.js
               subPath: mongo-allone-init.js
