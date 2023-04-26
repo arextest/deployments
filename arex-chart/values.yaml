@@ -5,14 +5,13 @@ nameOverride: ""
 fullnameOverride: ""
 # register prefix
 registerPre: "arexadmin01/"
-# registerPre: "630216610805.dkr.ecr.us-west-2.amazonaws.com/arex"
 
 front:
   enabled: true
   name: ui
   image:
     repository: arex
-    tag: 0.2.7
+    tag: 0.2.8
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -48,7 +47,7 @@ storage:
   name: storage
   image:
     repository: arex-storage-serive
-    tag: 0.2.7
+    tag: 0.2.8
     pullPolicy: IfNotPresent
   serviceAcountName: default
   extraArgs: {}
@@ -74,7 +73,7 @@ report:
   name: report
   image:
     repository: arex-report
-    tag: 0.2.7
+    tag: 0.2.8
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -104,7 +103,7 @@ schedule:
   name: schedule
   image:
     repository: arex-replay-schedule
-    tag: 0.2.7
+    tag: 0.2.8
     pullPolicy: IfNotPresent
   replicaCount: 2
   service:
