@@ -1,13 +1,5 @@
 # AREX: Real automated API testing with real data.
-
-AREX is an open-source automation testing tool which allows you to capture the online real data and replay it for testing. It provides rich testing features like API Testing, API Comparison Testing, Traffic Recording and Replay, etc.
-
-##### AREX Introduction
-
-- Homepage: www.arextest.com
-- demo: demo.arextest.com
-- Test restful API by record, replay and stub request/response.
-- Differential testing known as differential fuzzing, is a popular software testing technique that attempts to detect bugs, by providing the same input to a series of similar applications and observing differences in their execution.
+**AREX Components Version: 0.2.8**
 
 ## AREX Docker-Compose Install
 
