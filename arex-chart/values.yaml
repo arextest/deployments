@@ -5,6 +5,10 @@ nameOverride: ""
 fullnameOverride: ""
 # register prefix
 registerPre: "arexadmin01/"
+# mongodb config  10.5.153.1:27017
+mongoInfo: ""
+# redis config
+redisInfo: ""
 
 front:
   enabled: true
@@ -34,7 +38,7 @@ front:
   ingress:
     enabled: true
     annotations: {}
-    hosts: ["demo.arextext.com"]
+    hosts: ["local.arextest.com"]
     tls: ""
 
   resources: {}
@@ -148,9 +152,9 @@ node:
     type: ClusterIP
 
   ingress:
-    enabled: true
+    enabled: false
     annotations: {}
-    hosts: ["demo.arextext.com"]
+    hosts: []
     tls: ""
 
   resources: {}

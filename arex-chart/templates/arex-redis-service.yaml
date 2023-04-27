@@ -34,8 +34,10 @@ spec:
   {{- end }}
 {{- end }}
   ports:
-    - name: mongo-http
+    - name: redis-port
       port: {{ .Values.redis.service.servicePort }}
+      protocol: TCP
+      targetPort: {{ .Values.redis.service.servicePort }}
   selector:
     app: {{ template "arex.name" . }}
     component: "{{ .Values.redis.name }}"

@@ -34,8 +34,10 @@ spec:
   {{- end }}
 {{- end }}
   ports:
-    - name: mongo-http
+    - name: mongo-port
       port: {{ .Values.mongodb.service.servicePort }}
+      protocol: TCP
+      targetPort: {{ .Values.mongodb.service.servicePort }}
   selector:
     app: {{ template "arex.name" . }}
     component: "{{ .Values.mongodb.name }}"
