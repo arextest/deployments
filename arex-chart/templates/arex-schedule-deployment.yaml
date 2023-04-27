@@ -37,8 +37,8 @@ spec:
             - name: JAVA_OPTS
               value: -Dmongo.uri=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db  
                 -Darex.schedule.cache.redis.host=redis://{{ template "arex.redis.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.service.servicePort }}/
-                -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} 
-                -Darex.report.service.url=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}
+                -Darex.storage.service.api=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} 
+                -Darex.report.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}
           ports:
             - containerPort: {{ .Values.schedule.service.servicePort }}
           resources:
