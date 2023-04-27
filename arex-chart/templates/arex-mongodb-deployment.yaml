@@ -47,6 +47,8 @@ spec:
           ports:
             - containerPort: 27017
           volumeMounts:
+            - name: mongo-config
+              mountPath: /etc/mongo.conf
             - name: mongo-data
               mountPath: /data/db
             - name: settings
@@ -73,5 +75,8 @@ spec:
         - name: settings
           configMap:
             name: arex-mongodb-configs
+        - name: mongodb-config
+          configMap:
+            name: mongodb-conf
 {{- end }}
 

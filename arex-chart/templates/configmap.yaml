@@ -17,3 +17,16 @@ data:
       pwd: "iLoveArex",
       roles: [{ role: "readWrite", db: "arex_storage_db" }],
     });
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-conf
+data:
+  mongodb.conf: |
+    logpath=/data/mongodb/mongodb.log
+    pidfilepath=/data/mongodb/master.pid
+    directoryperdb=true
+    logappend=true
+    bind_ip=0.0.0.0
+    port=27017
