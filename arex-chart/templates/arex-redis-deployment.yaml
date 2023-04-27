@@ -38,8 +38,6 @@ spec:
           volumeMounts:
             - name: redis-data
               mountPath: /data
-            - name: redis-logs
-              mountPath: /var/log/redis
           resources:
 {{ toYaml .Values.redis.resources | indent 12 }}
     {{- if .Values.redis.nodeSelector }}
@@ -58,8 +56,5 @@ spec:
         - name: redis-data
           persistentVolumeClaim:      
             claimName: arex-redis-pvc      
-        - name: redis-logs
-          persistentVolumeClaim:            
-            claimName: arex-redis-logs
 {{- end }}
 
