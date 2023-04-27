@@ -163,7 +163,7 @@ node:
   tolerations: {}
 
 mongodb:
-  enabled: false
+  enabled: true
   name: mongodb
   image:
     repository: mongodb
@@ -187,7 +187,7 @@ mongodb:
   resources: {}
 
 redis:
-  enabled: false
+  enabled: true
   name: redis
   image:
     repository: redis

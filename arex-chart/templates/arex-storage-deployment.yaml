@@ -35,8 +35,9 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -Darex.storage.mongo.host=mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db 
-              # value: -Darex.storage.mongo.host=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db 
+              value: -Darex.storage.mongo.host=mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db 
+                -Darex.storage.cache.url=redis://{{ template "arex.redis.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.service.servicePort }}/
+                -Darex.report.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}/
           ports:
             - containerPort: {{ .Values.storage.service.servicePort }}
           resources:
