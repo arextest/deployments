@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: {{ template "arex.name" . }}-{{ .Values.mongodb.name }}
-          image: "{{ .Values.mongodb.image.repository }}:5.0"
+          image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
           imagePullPolicy: "{{ .Values.mongodb.image.pullPolicy }}"
           args:
           {{- range $key, $value := .Values.mongodb.extraArgs }}

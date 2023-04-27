@@ -166,7 +166,7 @@ mongodb:
   enabled: true
   name: mongodb
   image:
-    repository: mongodb
+    repository: mongo
     tag: 5.0
     pullPolicy: IfNotPresent
   replicaCount: 1
