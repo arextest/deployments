@@ -10,15 +10,20 @@ metadata:
 {{- end }}
   name: {{ template "arex.front.fullname" . }}
 spec:
-  rules:
-  - host: local.arextest.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ $serviceName }}
-            port: 
-              number: {{ $servicePort }}
+  defaultBackend:
+    service: 
+      name: {{ $serviceName }}
+      port: 
+        number: {{ $servicePort }}
+  # rules:
+  # - host: local.arextest.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: {{ $serviceName }}
+  #           port: 
+  #             number: {{ $servicePort }}
 {{- end -}}
