@@ -32,7 +32,7 @@ front:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 8088
+    servicePort: 8080
     type: ClusterIP
 
   ingress:
@@ -65,7 +65,7 @@ storage:
     externalIPs: []
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 8093
+    servicePort: 8080
     type: ClusterIP
   resources: {}
   nodeSelector: {}
@@ -94,7 +94,7 @@ report:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 8090
+    servicePort: 8080
     type: ClusterIP
 
   resources: {}
@@ -118,7 +118,7 @@ schedule:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 8092
+    servicePort: 8080
     type: ClusterIP
 
   nodeSelector: {}
