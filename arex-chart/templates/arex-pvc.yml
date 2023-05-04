@@ -7,7 +7,7 @@ metadata:
 spec:
   storageClassName: local-storage
   capacity:
-    storage: 5Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -22,7 +22,7 @@ metadata:
 spec:
   storageClassName: local-storage
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -37,7 +37,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
+      storage: 20Gi
   storageClassName: local-storage
 ---
 kind: PersistentVolumeClaim
@@ -49,5 +49,5 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
   storageClassName: local-storage

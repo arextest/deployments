@@ -5,10 +5,10 @@ nameOverride: ""
 fullnameOverride: ""
 # register prefix
 registerPre: "arexadmin01/"
-# mongodb config  10.5.153.1:27017
-mongoInfo: ""
-# redis config
-redisInfo: ""
+# mongodb config demo
+mongoInfo: "mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db"
+# redis config demo
+redisInfo: "redis://10.5.153.1:6390/"
 
 front:
   enabled: true

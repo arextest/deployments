@@ -33,15 +33,6 @@ spec:
           {{- range $key, $value := .Values.node.extraArgs }}
             - --{{ $key }}={{ $value }}
           {{- end }}
-          env:
-            - name: SERVICE_REPORT_URL
-              value: http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}  
-            - name: SERVICE_SCHEDULE_URL
-              value: http://{{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.schedule.service.servicePort }}  
-            - name: SERVICE_NODE_URL
-              value: http://{{ template "arex.node.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.node.service.servicePort }}  
-            - name: SERVICE_STORAGE_URL
-              value: http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }}  
           ports:
             - containerPort: {{ .Values.node.service.servicePort }}
           resources:
