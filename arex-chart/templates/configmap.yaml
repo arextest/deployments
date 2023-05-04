@@ -8,7 +8,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: arex-mongodb-configs
+  name: arex-mongodb-init
 data:
   mongo-allone-init.js: |
     db = db.getSiblingDB("arex_storage_db");

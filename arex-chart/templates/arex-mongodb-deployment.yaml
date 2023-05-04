@@ -74,7 +74,7 @@ spec:
             claimName: arex-mongodb-pvc
         - name: settings
           configMap:
-            name: arex-mongodb-configs
+            name: arex-mongodb-init
         - name: mongodb-config
           configMap:
             name: mongodb-conf
