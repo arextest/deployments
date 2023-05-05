@@ -1,13 +1,11 @@
 {{- if .Values.report.enabled -}}
-{{- if .Values.mongodb.enabled -}}
-{{- $mongoConnection := printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%s/arex_storage_db" (template "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
-{{- else -}}
 {{- $mongoConnection := .Values.mongoInfo -}}
+{{- $redisConnection := .Values.redisInfo -}}  
+{{- if .Values.mongodb.enabled -}}
+{{- $mongoConnection := printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%s/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
 {{- end -}}
 {{- if .Values.redis.enabled -}}
-{{- $redisConnection := printf "redis://%s.%s.svc.cluster.local:%s/" (template "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
-{{- else -}}
-{{- $redisConnection := .Values.redisInfo -}}  
+{{- $redisConnection := printf "redis://%s.%s.svc.cluster.local:%s/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
 {{- end -}}
 apiVersion: apps/v1
 kind: Deployment
