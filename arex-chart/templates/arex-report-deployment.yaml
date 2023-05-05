@@ -1,6 +1,18 @@
 {{- if .Values.report.enabled -}}
-{{- $mongoConnection := printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%s/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
-{{- $redisConnection := printf "redis://%s.%s.svc.cluster.local:%s/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
+{{- define "arex.mongoConnection" }}
+{{- if .Values.mongodb.enabled -}}
+{{- printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%d/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
+{{- else -}}
+{{- .Values.mongoInfo -}}
+{{- end -}}
+{{- end }}
+{{- define "arex.redisConnection" }}
+{{- if .Values.redis.enabled -}}
+{{- printf "redis://%s.%s.svc.cluster.local:%d/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
+{{- else -}}
+{{- .Values.redisInfo -}}  
+{{- end -}}
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,8 +49,8 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -Darex.report.mongo.uri={{$mongoConnection}}
-                -Darex.redis.uri={{$redisConnection}}
+              value: -Darex.report.mongo.uri={{ include arex.mongoConnection}}
+                -Darex.redis.uri={{ include arex.redisConnection}}
                 -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.service.servicePort }} 
                 -Darex.ui.url=http://{{ template "arex.front.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.front.service.servicePort }}
           ports:
