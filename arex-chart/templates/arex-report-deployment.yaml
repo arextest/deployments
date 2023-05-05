@@ -1,18 +1,4 @@
 {{- if .Values.report.enabled -}}
-{{- define "arex.mongoConnection" }}
-{{- if .Values.mongodb.enabled -}}
-{{- printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%d/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
-{{- else -}}
-{{- .Values.mongoInfo -}}
-{{- end -}}
-{{- end }}
-{{- define "arex.redisConnection" }}
-{{- if .Values.redis.enabled -}}
-{{- printf "redis://%s.%s.svc.cluster.local:%d/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
-{{- else -}}
-{{- .Values.redisInfo -}}  
-{{- end -}}
-{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

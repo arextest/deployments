@@ -66,3 +66,18 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s-%s" .Release.Name $name .Values.redis.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "arex.mongoConnection" -}}
+{{- if .Values.mongodb.enabled -}}
+{{- printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%d/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
+{{- else -}}
+{{- .Values.mongoInfo -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "arex.redisConnection" -}}
+{{- if .Values.redis.enabled -}}
+{{- printf "redis://%s.%s.svc.cluster.local:%d/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
+{{- else -}}
+{{- .Values.redisInfo -}}  
+{{- end -}}
+{{- end -}}
