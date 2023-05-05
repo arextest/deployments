@@ -1,11 +1,11 @@
 {{- if .Values.report.enabled -}}
 {{- if .Values.mongodb.enabled -}}
-{{- $mongoConnection := mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db }}
+{{- $mongoConnection := `mongodb://arex:iLoveArex@{{ template "arex.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mongodb.service.servicePort }}/arex_storage_db }}`
 {{- else -}}
 {{- $mongoConnection := .Values.mongoInfo }}
 {{- end -}}
 {{- if .Values.redis.enabled -}}
-{{- $redisConnection := redis://{{ template "arex.redis.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.service.servicePort }}/ }}
+{{- $redisConnection := `redis://{{ template "arex.redis.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.redis.service.servicePort }}/ }}`
 {{- else -}}
 {{- $redisConnection := .Values.redisInfo }}  
 {{- end -}}
