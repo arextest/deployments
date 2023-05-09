@@ -2,7 +2,7 @@ version: "3"
 
 services:
   arex-ui:
-    image: arexadmin01/arex-ui:0.2.8
+    image: arexadmin01/arex-ui:$AREX_VERSION
     container_name: arex-front
     restart: always
     ports:
@@ -12,6 +12,7 @@ services:
     environment:
       - SERVICE_REPORT_URL=http://arex-report-service:8080
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
+      - SERVICE_NODE_URL=http://arex-node:3000
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
       - OTEL_TRACE_HOST=10.5.153.151
       - OTEL_TRACE_PORT=4318
@@ -20,8 +21,17 @@ services:
       - arex-report-service
       - arex-schedule-service
       - arex-storage-service
+      - arex-node
+  arex-node:
+    image: arexadmin01/arex-node:0.2.7
+    container_name: arex-node
+    restart: always
+    ports:
+      - '10001:3000'
+    volumes:
+      - ./arex-logs/arex-node:/usr/src/app/logs
   arex-report-service:
-    image: arexadmin01/arex-report:0.2.8
+    image: arexadmin01/arex-report:$AREX_VERSION
     container_name: arex-report
     restart: always
     ports:
@@ -42,7 +52,7 @@ services:
     depends_on:
       - mongodb  
   arex-storage-service:
-    image: arexadmin01/arex-storage-serive:0.2.8
+    image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
     restart: always
     ports:
@@ -64,7 +74,7 @@ services:
       - mongodb
       - redis
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:0.2.8
+    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
     restart: always
     ports:
@@ -109,25 +119,6 @@ services:
       - cmysql
       - redis
       - arex-storage-service
-  cmysql:
-    image: mysql:8.0.29
-    container_name: community-mysql
-    privileged: true
-    user: "root"
-    restart: always
-    ports:
-      - 13306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_USER=arex_admin
-      - MYSQL_PASSWORD=arex_admin_password
-      - MYSQL_DATABASE=community
-    volumes:
-      - ./community_init/:/docker-entrypoint-initdb.d/
-      - ./conf.d:/etc/mysql/conf.d:ro
-      - ./arex-community/mysql:/var/lib/mysql
-      - ./arex-community/logs/mysql:/var/log/mysql.log
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
