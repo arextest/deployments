@@ -1,5 +1,5 @@
 # AREX: Real automated API testing with real data.
-**AREX Components Version: 0.2.8**
+**AREX Components Version: 0.2.9**
 
 ## AREX Docker-Compose Install
 
@@ -16,6 +16,13 @@ docker compose up -d
 ```
 cat .env
 AREX_VERSION=0.2.9
+```
+### Helm Chart Install
+```
+kubectl create namespace arex-beta(your arex namespace)
+helm install arex-beta-release -n arex-beta   ./arex-chart  
+or update
+helm upgrade arex-beta-release -n arex-beta   ./arex-chart  
 ```
 
 ## AREX Docker-Compose Uninstall
