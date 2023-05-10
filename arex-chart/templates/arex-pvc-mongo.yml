@@ -1,0 +1,28 @@
+{{- if .Values.mongodb.enabled -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: arex-pv-mongo-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: {{ .Values.mongodb.storage }}
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: arex-mongodb-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.storage }}
+  storageClassName: local-storage
+{{- end -}}

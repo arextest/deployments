@@ -1,0 +1,47 @@
+{{- if .Values.mongodb.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.mongodb.service.annotations }}
+  annotations:
+{{ toYaml .Values.mongodb.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    app: {{ template "arex.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.mongodb.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.mongodb.service.labels }}
+{{ toYaml .Values.mongodb.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "arex.mongodb.fullname" . }}
+spec:
+{{- if .Values.mongodb.service.clusterIP }}
+  clusterIP: {{ .Values.mongodb.service.clusterIP }}
+{{- end }}
+{{- if .Values.mongodb.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.mongodb.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.mongodb.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.mongodb.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.mongodb.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.mongodb.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: mongo-port
+      port: {{ .Values.mongodb.service.servicePort }}
+      protocol: TCP
+      targetPort: {{ .Values.mongodb.service.servicePort }}
+  selector:
+    app: {{ template "arex.name" . }}
+    component: "{{ .Values.mongodb.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.mongodb.service.type }}"
+{{- end }}
+

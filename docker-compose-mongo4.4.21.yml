@@ -75,7 +75,7 @@ services:
       - mongodb
       - redis
   mongodb:
-    image: mongo:5.0
+    image: mongo:4.4.21
     container_name: arex-mongodb
     restart: always
     ports:
