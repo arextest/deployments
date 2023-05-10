@@ -1,0 +1,29 @@
+{{- if and .Values.front.enabled .Values.front.ingress.enabled -}}
+{{- $serviceName := include "arex.front.fullname" . }}
+{{- $servicePort := .Values.front.service.servicePort -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+{{- if .Values.front.ingress.annotations }}
+  annotations:
+{{ toYaml .Values.front.ingress.annotations | indent 4}}
+{{- end }}
+  name: {{ template "arex.front.fullname" . }}
+spec:
+  defaultBackend:
+    service: 
+      name: {{ $serviceName }}
+      port: 
+        number: {{ $servicePort }}
+  # rules:
+  # - host: local.arextest.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: {{ $serviceName }}
+  #           port: 
+  #             number: {{ $servicePort }}
+{{- end -}}

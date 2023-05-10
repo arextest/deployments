@@ -1,0 +1,12 @@
+apiVersion: v2
+# engine: gotpl
+home: http://www.arextest.com
+maintainers: 
+- email: robin.haibingwang@gmail.com
+  name: robin
+appVersion: "0.2.8"
+description: Helm chart of AREX.
+name: arex
+sources: 
+- https://github.com/arextest
+version: 0.1.0
