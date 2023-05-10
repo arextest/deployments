@@ -1,0 +1,47 @@
+{{- if .Values.report.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.report.service.annotations }}
+  annotations:
+{{ toYaml .Values.report.service.annotations | indent 4}}
+{{- end }}
+  labels:
+    app: {{ template "arex.name" . }}-{{ .Values.report.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.report.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.report.service.labels }}
+{{ toYaml .Values.report.service.labels | indent 4}}
+{{- end }}
+  name: {{ template "arex.report.fullname" . }}
+spec:
+{{- if .Values.report.service.clusterIP }}
+  clusterIP: {{ .Values.report.service.clusterIP }}
+{{- end }}
+{{- if .Values.report.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.report.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.report.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.report.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.report.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.report.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.report.service.servicePort }}
+      protocol: TCP
+      targetPort: {{ .Values.report.service.servicePort }}
+  selector:
+    app: {{ template "arex.name" . }}-{{ .Values.report.name }}
+    component: "{{ .Values.report.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.report.service.type }}"
+{{- end }}
+

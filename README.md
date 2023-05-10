@@ -9,6 +9,15 @@ cd deployments
 docker compose up -d
 ```
 
+### .env config   
+1. There are many configurations of Docker versions in the configuration file, which are hard-coded, such as 0.2.9. Now they have been extracted and set as variables, stored in .env file.
+2. Users can directly modify the content of the .env file to change the version.
+3. Users can also modify the old version number to roll back to a previous version.
+```
+cat .env
+AREX_VERSION=0.2.9
+```
+
 ## AREX Docker-Compose Uninstall
 
 ```
@@ -19,6 +28,7 @@ rm -rf ./arex-data
 <!-- Delete arex logs. If you want to save the data, You should ignore the command. -->
 rm -rf ./arex-logs
 ```
+
 
 ## License
 
