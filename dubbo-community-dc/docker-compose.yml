@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  dubbo2-community-test:
+    image: arexadmin01/dubbo2-community-test:0.0.1
+    container_name: dubbo2-commnity-test
+    privileged: true
+    user: "root"
+    networks:
+      - community
+    restart: always
+    ports:
+      - '20882:20880'
+    volumes:
+      - ./arex-community/logs/dubbo2-community:/usr/local/tomcat/logs
+    environment:
+      - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.3.0.jar' 
+        -Darex.service.name=dubbo2-community-0519 
+        -Darex.storage.service.host=10.5.153.1:8093 
+        -Darex.enable.debug=true 
+        
+  dubbo3-community-test:
+    image: arexadmin01/dubbo3-community-test:0.0.1
+    container_name: dubbo3-commnity-test
+    privileged: true
+    user: "root"
+    networks:
+      - community
+    restart: always
+    ports:
+      - '20883:20880'
+    volumes:
+      - ./arex-community/logs/dubbo3-community:/usr/local/tomcat/logs
+    environment:
+      - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.3.0.jar' 
+        -Darex.service.name=dubbo3-community-0519 
+        -Darex.storage.service.host=10.5.153.1:8093 
+        -Darex.enable.debug=true 
+
+networks:
+  community:
+    driver: bridge
