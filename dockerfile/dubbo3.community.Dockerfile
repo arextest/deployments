@@ -1,6 +1,6 @@
 FROM tomcat:9.0-jdk8-openjdk
 
-ARG WAR_FILE=./target/dubbo3-provider-1.0-SNAPSHOT.war
+ARG WAR_FILE=./dubbo3-provider/target/dubbo3-provider-1.0-SNAPSHOT.war
 ADD $WAR_FILE /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/conf
