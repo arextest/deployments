@@ -6,8 +6,8 @@ ADD $WAR_FILE /usr/local/tomcat/webapps/
 WORKDIR /usr/local/tomcat/conf
 RUN sed -i 'N;152a\\t<Context path="" docBase="dubbo2-provider-1.0-SNAPSHOT" reloadable="true" />' server.xml
 
-ADD ./arex-agent-0.2.0.jar /usr/local/tomcat/
-ADD ./arex-agent-bootstrap-0.2.0.jar /usr/local/tomcat/
+ADD ./arex-agent-0.3.0.jar /usr/local/tomcat/
+ADD ./arex-agent-bootstrap-0.3.0.jar /usr/local/tomcat/
 
 WORKDIR /usr/local/tomcat
 EXPOSE 20880
