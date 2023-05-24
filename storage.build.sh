@@ -1,7 +1,13 @@
-printf "current AREX Version: $AREX_VERSION
-Run shell: export AREX_VERSION=0.2.9 (set arex version)
-or unset AREX_VERSION (unset arex version)
-"
+#!/bin/bash
+
+# Read the value of AREX_VERSION from .env file
+if [[ -f .env ]]; then
+    source .env
+else
+    echo "Error: .env file not found. Exiting."
+    exit 1
+fi
+printf "current AREX Version: $AREX_VERSION "
 
 cd ../arex-storage
 mvn clean package -DskipTests

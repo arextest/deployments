@@ -8,7 +8,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx1024m" #设置使用jvm内存大小
     volumes:
       #- ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z 
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/data:/var/lib/elasticsearch/data
       - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins
     privileged: true
     user: root

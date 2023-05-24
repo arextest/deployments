@@ -2,7 +2,7 @@ version: "3"
 
 services:
   arex-ui:
-    image: arexadmin01/arex-ui:$AREX_VERSION
+    image: arexadmin01/arex:$AREX_VERSION
     container_name: arex-front
     restart: always
     ports:
@@ -14,7 +14,7 @@ services:
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_NODE_URL=http://arex-node:3000
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
-      - OTEL_TRACE_HOST=10.5.153.151
+      - OTEL_TRACE_HOST=10.5.153.1
       - OTEL_TRACE_PORT=4318
       - OTEL_TRACE_SERVICE=AREX-UI
     depends_on:
@@ -44,8 +44,8 @@ services:
       - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
-      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.1:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.1:4318
       - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
       - OTEL_SERVICE_NAME=SERVICE_REPORT
       - OTEL_RESOURCE_ATTRIBUTES="application=AREX"
@@ -65,8 +65,8 @@ services:
       - JAVA_TOOL_OPTIONS="-javaagent:/shared/opentelemetry-javaagent.jar"
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
-      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.1:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.1:4318
       - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
       - OTEL_SERVICE_NAME=SERVICE_STORAGE
       - OTEL_RESOURCE_ATTRIBUTES="application=AREX"
@@ -87,38 +87,14 @@ services:
       - JAVA_TOOL_OPTIONS=-javaagent:/shared/opentelemetry-javaagent.jar
       - OTEL_METRICS_EXPORTER=none
       - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
-      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.1:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.1:4318
       - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
       - OTEL_SERVICE_NAME=SERVICE_SCHEDULE
       - OTEL_RESOURCE_ATTRIBUTES="application=AREX"
     depends_on:
       - mongodb
       - redis
-  arex-community-test:
-    image: arexadmin01/arex-community-test:0.0.1
-    container_name: arex-commnity-test
-    privileged: true
-    user: "root"
-    restart: always
-    ports:
-      - '18080:8080'
-    volumes:
-      - ./arex-community/logs/community:/usr/local/tomcat/logs
-      - ./agent/opentelemetry-javaagent.jar:/shared/opentelemetry-javaagent.jar
-    environment:
-      - JAVA_TOOL_OPTIONS=-javaagent:/usr/local/tomcat/arex-agent-0.1.0.jar -javaagent:/shared/opentelemetry-javaagent.jar -Darex.service.name=community-otel -Darex.storage.service.host=arex-storage-service:8080 -Darex.enable.debug=true  -Dspring.datasource.url=jdbc:mysql://cmysql:3306/community?useUnicode=true&characterEncoding=utf-8 -Dspring.datasource.username=arex_admin -Dspring.datasource.password=arex_admin_password -Dspring.redis.host=redis -Dspring.redis.port=6379
-      - OTEL_METRICS_EXPORTER=none
-      - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://10.5.153.151:4318/v1/traces
-      - OTEL_EXPORTER_OTLP_ENDPOINTT=http://10.5.153.151:4318
-      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=http/protobuf
-      - OTEL_SERVICE_NAME=AREX_COMMUNITY_TEST
-      - OTEL_RESOURCE_ATTRIBUTES="application=AREX"
-    depends_on:
-      - cmysql
-      - redis
-      - arex-storage-service
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
