@@ -126,42 +126,6 @@ schedule:
   tolerations: {}
   resources: {}
 
-node:
-  enabled: true
-  name: node
-  image:
-    repository: arex-node
-    tag: 0.2.7
-    pullPolicy: IfNotPresent
-
-  serviceAcountName: default
-  extraArgs: {}
-  prefixURL: ""
-  baseURL: ""
-
-  replicaCount: 1
-  service:
-    annotations: {}
-    labels: {}
-    clusterIP: ""
-    externalIPs: []
-
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: []
-    servicePort: 3000
-    type: ClusterIP
-
-  ingress:
-    enabled: false
-    annotations: {}
-    hosts: []
-    tls: ""
-
-  resources: {}
-  nodeSelector: {}
-  podAnnotations: {}
-  tolerations: {}
-
 mongodb:
   enabled: true
   name: mongodb

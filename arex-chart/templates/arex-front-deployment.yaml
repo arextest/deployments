@@ -38,8 +38,6 @@ spec:
               value: http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.report.service.servicePort }}  
             - name: SERVICE_SCHEDULE_URL
               value: http://{{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.schedule.service.servicePort }}  
-            - name: SERVICE_NODE_URL
-              value: http://{{ template "arex.node.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.node.service.servicePort }}  
             - name: SERVICE_STORAGE_URL
               value: http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.storage.service.servicePort }}  
           ports:

@@ -36,7 +36,6 @@ git checkout dev
 ```
 
 - 编译 AREX 前端 ./front.build.sh
-- 编译 node 服务 ./node.build.sh
 - 编译 report 服务 ./report.build.sh
 - 编译 storage 服务 ./storage.build.sh
 - 编译 schedule 服务 ./schedule.build.sh
