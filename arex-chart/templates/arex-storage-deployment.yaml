@@ -37,7 +37,7 @@ spec:
             - name: JAVA_OPTS
               value: -Darex.storage.mongo.host={{ include "arex.mongoConnection" .}}
                 -Darex.storage.cache.url={{ include "arex.redisConnection" .}}
-                -Darex.report.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.report.service.servicePort }}/
+                -Darex.report.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.report.service.servicePort }}/
           ports:
             - containerPort: {{ .Values.storage.service.servicePort }}
           resources:
