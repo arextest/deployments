@@ -24,4 +24,5 @@ RUN npm run build
 # COPY . .
 
 EXPOSE 8080
-CMD [ "node", "server.js",">","./logs/app.log","2>", "./logs/error.log"]
+# CMD [ "node", "server.js",">","./logs/app.log","2>", "./logs/error.log"]
+CMD [ "node", "packages/arex/server.js",">","./logs/app.log","2>", "./logs/error.log"]
