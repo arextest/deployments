@@ -15,7 +15,7 @@ front:
   name: ui
   image:
     repository: arex
-    tag: 0.2.10
+    tag: 0.3.0
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -51,7 +51,7 @@ storage:
   name: storage
   image:
     repository: arex-storage-serive
-    tag: 0.2.10
+    tag: 0.3.0
     pullPolicy: IfNotPresent
   serviceAcountName: default
   extraArgs: {}
@@ -77,7 +77,7 @@ report:
   name: report
   image:
     repository: arex-report
-    tag: 0.2.10
+    tag: 0.3.0
     pullPolicy: IfNotPresent
 
   serviceAcountName: default
@@ -107,7 +107,7 @@ schedule:
   name: schedule
   image:
     repository: arex-replay-schedule
-    tag: 0.2.10
+    tag: 0.3.0
     pullPolicy: IfNotPresent
   replicaCount: 1
   service:
@@ -125,42 +125,6 @@ schedule:
   podAnnotations: {}
   tolerations: {}
   resources: {}
-
-node:
-  enabled: true
-  name: node
-  image:
-    repository: arex-node
-    tag: 0.2.7
-    pullPolicy: IfNotPresent
-
-  serviceAcountName: default
-  extraArgs: {}
-  prefixURL: ""
-  baseURL: ""
-
-  replicaCount: 1
-  service:
-    annotations: {}
-    labels: {}
-    clusterIP: ""
-    externalIPs: []
-
-    loadBalancerIP: ""
-    loadBalancerSourceRanges: []
-    servicePort: 3000
-    type: ClusterIP
-
-  ingress:
-    enabled: false
-    annotations: {}
-    hosts: []
-    tls: ""
-
-  resources: {}
-  nodeSelector: {}
-  podAnnotations: {}
-  tolerations: {}
 
 mongodb:
   enabled: true
