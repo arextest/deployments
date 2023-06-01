@@ -51,11 +51,6 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s-%s" .Release.Name $name .Values.schedule.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "arex.node.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s-%s" .Release.Name $name .Values.node.name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "arex.mongodb.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s-%s" .Release.Name $name .Values.mongodb.name | trunc 63 | trimSuffix "-" -}}
@@ -68,7 +63,7 @@ Create chart name and version as used by the chart label.
 
 {{- define "arex.mongoConnection" -}}
 {{- if .Values.mongodb.enabled -}}
-{{- printf "mongodb://arex:iLoveArex@%s.%s.svc.cluster.local:%v/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
+{{- printf "mongodb://arex:iLoveArex@%s.%s:%v/arex_storage_db" (include "arex.mongodb.fullname" .) .Release.Namespace .Values.mongodb.service.servicePort -}} 
 {{- else -}}
 {{- .Values.mongoInfo -}}
 {{- end -}}
@@ -76,7 +71,7 @@ Create chart name and version as used by the chart label.
 
 {{- define "arex.redisConnection" -}}
 {{- if .Values.redis.enabled -}}
-{{- printf "redis://%s.%s.svc.cluster.local:%v/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
+{{- printf "redis://%s.%s:%v/" (include "arex.redis.fullname" .) .Release.Namespace .Values.redis.service.servicePort -}}
 {{- else -}}
 {{- .Values.redisInfo -}}  
 {{- end -}}
