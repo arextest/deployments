@@ -65,6 +65,7 @@ services:
         -Darex.report.service.api=http://arex-report-service:8080
         -Darex.custom.protocol.jarPath.custom="/usr/local/tomcat/custom-dubbo/dubbox-custom-protocol-1.0-SNAPSHOT.jar"
         -Darex.custom.protocol.textPath="/usr/local/tomcat/custom-dubbo/com.alibaba.dubbo.rpc.Protocol"
+        -Dfastjson.parser.autoTypeSupport=true
     depends_on:
       - mongodb
       - redis
