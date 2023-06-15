@@ -50,7 +50,7 @@ services:
       - mongodb
       - redis
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:0.3.0.5
+    image: arexadmin01/arex-replay-schedule:0.3.0.6
     container_name: arex-schedule
     restart: always
     ports:
