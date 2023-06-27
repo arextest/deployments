@@ -9,10 +9,10 @@ else
 fi
 printf "current AREX Version: $AREX_VERSION "
 
-cd ../arex-replay-schedule
+cd ../arex-replay-schedule/arex-schedule-web-api
 mvn clean package -DskipTests
 
-cp ../deployments/dockerfile/schedule.Dockerfile ./Dockerfile
+cp ../../deployments/dockerfile/schedule.Dockerfile ./Dockerfile
 docker build -t  arexadmin01/arex-replay-schedule:$AREX_VERSION  .
 rm -rf ./Dockerfile
 
