@@ -6,8 +6,8 @@ ADD $WAR_FILE /usr/local/tomcat/webapps/
 WORKDIR /usr/local/tomcat/conf
 RUN sed -i 'N;152a\\t<Context path="" docBase="arex-agent-test-0.0.1-SNAPSHOT" reloadable="true" />' server.xml
 
-ADD ./arex-agent-0.3.4.jar /usr/local/tomcat/
-ADD ./arex-agent-bootstrap-0.3.4.jar /usr/local/tomcat/
+ADD ./arex-agent-0.3.7.jar /usr/local/tomcat/
+ADD ./arex-agent-bootstrap-0.3.7.jar /usr/local/tomcat/
 
 WORKDIR /usr/local/tomcat
 EXPOSE 8080

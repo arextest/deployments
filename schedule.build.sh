@@ -9,6 +9,7 @@ else
 fi
 printf "current AREX Version: $AREX_VERSION "
 
+
 cd ../arex-replay-schedule/arex-schedule-web-api
 mvn clean package -DskipTests
 

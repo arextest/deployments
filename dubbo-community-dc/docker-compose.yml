@@ -15,7 +15,7 @@ services:
       - ./arex-community/logs/dubbo2-community:/usr/local/tomcat/logs
     environment:
       - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.3.0.1.jar'
-        -Darex.service.name=dubbo2-community-0613
+        -Darex.service.name=dubbo2-community-0630
         -Darex.storage.service.host=10.5.153.1:8093
         -Darex.enable.debug=true
     
@@ -33,7 +33,7 @@ services:
       - ./arex-community/logs/dubbo3-community:/usr/local/tomcat/logs
     environment:
       - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.3.0.jar'
-        -Darex.service.name=dubbo3-community-0613
+        -Darex.service.name=dubbo3-community-0630
         -Darex.storage.service.host=10.5.153.1:8093
         -Darex.enable.debug=true    
    
@@ -51,7 +51,7 @@ services:
       - ./arex-community/logs/dubbox-custom-community:/usr/local/tomcat/logs
     environment:
       - JAVA_TOOL_OPTIONS='-javaagent:/usr/local/tomcat/arex-agent-0.3.4.jar'
-        -Darex.service.name=dubbox-custom-community-0613
+        -Darex.service.name=dubbox-custom-community-0630
         -Darex.storage.service.host=10.5.153.1:8093
         -Darex.enable.debug=true
 

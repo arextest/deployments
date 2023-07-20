@@ -63,7 +63,6 @@ services:
         -Darex.schedule.cache.redis.host=redis://redis:6379
         -Darex.storage.service.api=http://arex-storage-service:8080 
         -Darex.report.service.api=http://arex-report-service:8080
-        -Dreplay.sender.extension.jarPath="/usr/local/tomcat/custom-dubbo/dubboInvoker.jar"
     depends_on:
       - mongodb
       - redis
