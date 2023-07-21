@@ -1,0 +1,8 @@
+30-May-2023 10:02:15.169 INFO [Thread-5] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+30-May-2023 10:02:15.182 INFO [Thread-5] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+30-May-2023 10:02:15.215 WARNING [Thread-5] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [ROOT] appears to have started a thread named [DubboResponseTimeoutScanTimer] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Thread.sleep(Native Method)
+ com.alibaba.dubbo.remoting.exchange.support.DefaultFuture$RemotingInvocationTimeoutScan.run(DefaultFuture.java:298)
+ java.lang.Thread.run(Thread.java:750)
+30-May-2023 10:02:15.226 INFO [Thread-5] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+30-May-2023 10:02:15.239 INFO [Thread-5] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]

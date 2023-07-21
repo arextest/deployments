@@ -1,0 +1,15 @@
+13-Jun-2023 06:07:19.639 INFO [Thread-9] org.apache.catalina.core.ApplicationContext.log Closing Spring root WebApplicationContext
+13-Jun-2023 06:25:46.594 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:25:51.172 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+13-Jun-2023 06:25:59.207 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:26:03.116 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+13-Jun-2023 06:27:03.916 INFO [Thread-9] org.apache.catalina.core.ApplicationContext.log Closing Spring root WebApplicationContext
+13-Jun-2023 06:29:12.505 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:29:16.700 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+13-Jun-2023 06:29:24.445 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:29:28.562 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+13-Jun-2023 06:46:11.050 INFO [Thread-5] org.apache.catalina.core.ApplicationContext.log Closing Spring root WebApplicationContext
+13-Jun-2023 06:47:29.017 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:47:33.506 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
+13-Jun-2023 06:47:40.548 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+13-Jun-2023 06:47:44.351 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext
