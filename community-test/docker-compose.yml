@@ -29,8 +29,8 @@ services:
     ports:
       - 13306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_PASSWORD=arex_admin_password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=false
       - MYSQL_USER=arex_admin
       - MYSQL_PASSWORD=arex_admin_password
       - MYSQL_DATABASE=community
