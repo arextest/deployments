@@ -24,10 +24,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 2
+          cpus: '2'
           memory: 2G
         reservations:
-          cpus: 2
+          cpus: '2'
           memory: 2G
     ports:
       - '8090:8080'
@@ -48,11 +48,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 2
+          cpus: '2'
           memory: 2G
         reservations:
-          cpus: 1.5
-          memory: 1.5G
+          cpus: '2'
+          memory: 2G
     ports:
       - '8093:8080'
     volumes:
@@ -71,10 +71,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 2
+          cpus: '2'
           memory: 2G
         reservations:
-          cpus: 2
+          cpus: '2'
           memory: 2G
     ports:
       - '8092:8080'
