@@ -17,11 +17,18 @@ services:
       - arex-report-service
       - arex-schedule-service
       - arex-storage-service
-
   arex-report-service:
     image: arexadmin01/arex-report:$AREX_VERSION
     container_name: arex-report
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 2G
+        reservations:
+          cpus: 2
+          memory: 2G
     ports:
       - '8090:8080'
     volumes:
@@ -38,6 +45,14 @@ services:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 2G
+        reservations:
+          cpus: 1.5
+          memory: 1.5G
     ports:
       - '8093:8080'
     volumes:
@@ -53,6 +68,14 @@ services:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 2G
+        reservations:
+          cpus: 2
+          memory: 2G
     ports:
       - '8092:8080'
     volumes:
