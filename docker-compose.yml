@@ -60,7 +60,11 @@ services:
     environment:
       - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
-        -Darex.report.service.api=http://arex-report-service:8080
+        -Darex.report.service.api=http://arex-report-service:8080 
+        -Darex.oauth.gitlab.clientid=7dbc52caab4eb3d452c39354ae226a4ff89e9fda2ccb349d01dd5e9d214c496c 
+        -Darex.oauth.gitlab.secret=29e33cfabbca6df3429592a03c3914f3c3fe8ec4386ce17d88b6f7c46f40dfc3 
+        -Darex.oauth.gitlab.redirecturi=http://10.5.153.1:8088/auth 
+        -Darex.oauth.gitlab.uri=http://git.dev.sh.ctripcorp.com
     depends_on:
       - mongodb
       - redis
