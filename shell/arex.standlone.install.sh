@@ -64,9 +64,11 @@ current_dir=$(pwd)
 printf "\033[34m
    Install success.
    Execute AREX Standalone command line
-   $current_dir/arex-standalone-all/arex-cli.sh 
+     cd $current_dir/arex-standalone-all
+     ./arex-cli.sh 
    OR
-   ./arex-standalone-all/arex-cli.sh 
+     cd ./arex-standalone-all 
+     ./arex-cli.sh 
 \033[0m"
 
 # if [ "$systemdaemon_install" = false ]; then
