@@ -50,9 +50,15 @@ url="https://github.com/arextest/arex-standalone/releases/latest/download/arex-s
 curl -L -O $url
 unzip arex-standalone-all.zip
 
-printf "\033[34m
+if [ -n "$AREX_API_KEY" ]; then
+   printf "\033[34m
    AREX Standalone Config. HOST: $AREX_SITE TOKEN: $AREX_API_KEY VERSION: $AREX_AGENT_MAJOR_VERSION
 \033[0m"
+else
+   printf "\033[34m
+   AREX Standalone Config. HOST: arextest.com VERSION: Latest
+\033[0m"
+fi
 
 current_dir=$(pwd)
 printf "\033[34m
