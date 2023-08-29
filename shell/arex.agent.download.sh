@@ -6,6 +6,7 @@ Welcome to use AREX. Now Download AREX Agent jar
 
 agent_url="https://github.com/arextest/deployments/blob/dev/arex-agent-jar/arex-agent-0.3.8.jar"
 curl -L -O $agent_url
+
 agent_bootstrap_url ="https://github.com/arextest/deployments/blob/dev/arex-agent-jar/arex-agent-bootstrap-0.3.8.jar"
 curl -L -O $agent_bootstrap_url
 
