@@ -20,7 +20,7 @@ else
 \033[0m"
 fi
 
-echo "arex.service.name=your-service-name" >> arex.agent.conf
+echo "arex.service.name=your-service-name" > arex.agent.conf
 echo "arex.storage.service.host=<storage.service.host:port>" >> arex.agent.conf
 
 current_dir=$(pwd)
