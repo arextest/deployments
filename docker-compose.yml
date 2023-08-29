@@ -37,6 +37,7 @@ services:
       - JAVA_OPTS=-Darex.report.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db  
         -Darex.redis.uri=redis://redis:6379/
         -Darex.storage.service.url=http://arex-storage-service:8080 
+        -Dlogging.level.com.arextest=INFO 
     depends_on:
       - mongodb  
       - redis
@@ -60,6 +61,7 @@ services:
       - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
         -Darex.report.service.api=http://arex-report-service:8080 
+        -Dlogging.level.com.arextest.storage=INFO 
     depends_on:
       - mongodb
       - redis
@@ -84,7 +86,8 @@ services:
       - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.schedule.cache.redis.host=redis://redis:6379
         -Darex.storage.service.api=http://arex-storage-service:8080 
-        -Darex.report.service.api=http://arex-report-service:8080
+        -Darex.report.service.api=http://arex-report-service:8080 
+        -Dlogging.level.com.arextest.schedule=INFO 
     depends_on:
       - mongodb
       - redis
