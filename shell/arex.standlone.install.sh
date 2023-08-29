@@ -16,6 +16,10 @@ run_dir=/opt/arex-agent/run
 service_name="com.arex.agent"
 systemwide_servicefile_name="/Library/LaunchDaemons/${service_name}.plist"
 
+printf "\033[32m
+Welcome to use AREX Standalone.
+\033[0m"
+
 if [ -n "$AREX_REPO_URL" ]; then
     dmg_base_url=$AREX_REPO_URL
 fi
@@ -46,18 +50,28 @@ url="https://github.com/arextest/arex-standalone/releases/latest/download/arex-s
 curl -L -O $url
 unzip arex-standalone-all.zip
 
-current_dir=$(pwd)
-echo "\033[34m\n $AREX_SITE $AREX_API_KEY"
-echo "\033[34m\n Execute AREX Standalone command line:\r\n\t$current_dir/bin/arex-cli.sh "
+printf "\033[34m
+   AREX Standalone Config. HOST: $AREX_SITE TOKEN: $AREX_API_KEY VERSION: $AREX_AGENT_MAJOR_VERSION
+\033[0m"
 
-if [ "$systemdaemon_install" = false ]; then
-    printf "\033[32m
-If you ever want to stop the Agent, please use the AREX Agent App or
-the launchctl command. It will start automatically at login.
+current_dir=$(pwd)
+printf "\033[34m
+   Install success.
+   Execute AREX Standalone command line
+   $current_dir/arex-standalone-all/arex-cli.sh 
+   OR
+   ./arex-standalone-all/arex-cli.sh 
 \033[0m"
-else
-    printf "\033[32m
-If you ever want to stop the Agent, please use the the launchctl command.
-The Agent will start automatically at system startup.
-\033[0m"
-fi
+
+# if [ "$systemdaemon_install" = false ]; then
+#     printf "\033[32m
+# If you ever want to stop the Agent, please use the AREX Agent App or
+# the launchctl command. It will start automatically at login.
+# \033[0m"
+# else
+#     printf "\033[32m
+# If you ever want to stop the Agent, please use the the launchctl command.
+# The Agent will start automatically at system startup.
+# \033[0m"
+# fi
+
