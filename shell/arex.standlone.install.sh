@@ -65,9 +65,11 @@ printf "\033[34m
    Install success.
    Execute AREX Standalone command line
      cd $current_dir/arex-standalone-all
+     chmod 700 ./arex-cli.sh 
      ./arex-cli.sh 
    OR
      cd ./arex-standalone-all 
+     chmod 700 ./arex-cli.sh 
      ./arex-cli.sh 
 \033[0m"
 
