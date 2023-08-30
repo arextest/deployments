@@ -57,7 +57,7 @@ printf "\033[32m
 Download AREX Install files:
 1. Docker-compose.yaml  
 2. .env (config version file)
-3. 
+3. mongodb init sql file
 \033[0m"
 env_url="https://raw.githubusercontent.com/arextest/deployments/main/.env"
 curl -L -O $env_url
@@ -81,6 +81,10 @@ fi
 current_dir=$(pwd)
 printf "\033[34m
    Install success......
-   Start arex-service: docker compose up -d 
-   Stop  arex-service: docker compose down -v 
+   docker-compose v1:
+     Start arex-service: docker compose up -d 
+     Stop  arex-service: docker compose down -v 
+   docker-compose v2:
+     Start arex-service: docker compose up -d 
+     Stop  arex-service: docker compose down -v 
 \033[0m"
