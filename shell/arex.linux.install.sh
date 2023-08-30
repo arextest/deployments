@@ -12,7 +12,7 @@ service_name="com.arex.agent"
 systemwide_servicefile_name="/Library/LaunchDaemons/${service_name}.plist"
 
 printf "\033[32m
-Welcome to use AREX in macPro.
+Welcome to use AREX in linux OS.
 \033[0m"
 
 # Check if Docker is installed
