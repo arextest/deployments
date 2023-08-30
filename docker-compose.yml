@@ -57,6 +57,7 @@ services:
       - '8093:8080'
     volumes:
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
+      - ./arex-extension/arex-storage:/usr/local/tomcat/extension
     environment:
       - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
@@ -82,6 +83,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
       - ./custom-dubbo:/usr/local/tomcat/custom-dubbo
+      - ./arex-extension/arex-schedule:/usr/local/tomcat/extension
     environment:
       - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.schedule.cache.redis.host=redis://redis:6379
