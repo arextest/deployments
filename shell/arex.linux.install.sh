@@ -82,8 +82,8 @@ current_dir=$(pwd)
 printf "\033[34m
    Install success......
    docker-compose v1:
-     Start arex-service: docker compose up -d 
-     Stop  arex-service: docker compose down -v 
+     Start arex-service: docker-compose up -d 
+     Stop  arex-service: docker-compose down -v 
    docker-compose v2:
      Start arex-service: docker compose up -d 
      Stop  arex-service: docker compose down -v 
