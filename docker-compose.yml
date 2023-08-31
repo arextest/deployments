@@ -14,9 +14,8 @@ services:
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
-      - arex-report-service
-      - arex-schedule-service
-      - arex-storage-service
+      arex-report-service:
+        condition: service_healthy
 
   arex-report-service:
     image: arexadmin01/arex-report:$AREX_VERSION
@@ -32,8 +31,15 @@ services:
         -Darex.storage.service.url=http://arex-storage-service:8080 
         -Darex.ui.url=http://arex:8080
     depends_on:
-      - mongodb  
-      - redis
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
+      interval: 1s
+      timeout: 3s
+      retries: 60
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
@@ -46,9 +52,14 @@ services:
       - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
         -Darex.report.service.api=http://arex-report-service:8080
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
+      interval: 1s
+      timeout: 3s
+      retries: 60
     depends_on:
-      - mongodb
-      - redis
+      arex-report-service:
+        condition: service_healthy
   arex-schedule-service:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
@@ -63,8 +74,9 @@ services:
         -Darex.storage.service.api=http://arex-storage-service:8080 
         -Darex.report.service.api=http://arex-report-service:8080
     depends_on:
-      - mongodb
-      - redis
+      arex-report-service:
+        condition: service_healthy
+
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -82,6 +94,12 @@ services:
       - MONGO_INITDB_DATABASE=rootdb
       - MONGO_USERNAME=arex
       - MONGO_PASSWORD=iLoveArex
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo 127.0.0.1:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
   redis:
     image: redis:6.2.6
     container_name: arex-redis
@@ -92,3 +110,8 @@ services:
     volumes:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
