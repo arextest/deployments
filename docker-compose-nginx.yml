@@ -12,7 +12,8 @@ services:
     depends_on:
       - arex
     networks:
-      - internal-network      
+      - internal-network 
+      - public-network     
   arex:
     image: arexadmin01/arex:$AREX_VERSION
     container_name: arex
@@ -178,4 +179,5 @@ services:
       - internal-network
 networks:
   internal-network:
-    # internal: true
+    internal: true
+  public-network:
