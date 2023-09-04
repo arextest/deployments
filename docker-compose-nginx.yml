@@ -37,8 +37,6 @@ services:
     restart: always
     expose:
       - "8080"
-    ports:
-      - internal:8080
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
@@ -57,8 +55,6 @@ services:
     restart: always
     expose:
       - "8080"
-    ports:
-      - internal:8080
     volumes:
       - ./arex-logs/arex-storage1:/usr/local/tomcat/logs
     environment:
