@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  arex-gateway:
+  gateway:
     container_name: gateway-nginx
     image: nginx
     volumes:
       - ./conf/nginx-gateway.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-gateway:/var/log/nginx
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on:
       - arex
     networks:
       - internal-network      
   arex:
     image: arexadmin01/arex:$AREX_VERSION
-    container_name: arex-front
+    container_name: arex
     restart: always
     expose:
       - "8080"
