@@ -178,4 +178,4 @@ services:
       - internal-network
 networks:
   internal-network:
-    internal: true
+    # internal: true
