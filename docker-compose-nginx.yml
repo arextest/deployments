@@ -11,12 +11,16 @@ services:
       - "80:8080"
     depends_on:
       - arex
+    networks:
+      - internal-network      
   arex:
     image: arexadmin01/arex:$AREX_VERSION
     container_name: arex-front
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '8088:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
@@ -27,12 +31,16 @@ services:
       - arex-report-service
       - arex-schedule-service
       - arex-storage-service
+    networks:
+      - internal-network
   arex-report-service:
     image: arexadmin01/arex-report:$AREX_VERSION
     container_name: arex-report
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '8090:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
     environment:
@@ -43,12 +51,16 @@ services:
     depends_on:
       - mongodb
       - redis
+    networks:
+      - internal-network
   arex-storage-service1:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage1
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '10093:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-storage1:/usr/local/tomcat/logs
     environment:
@@ -58,12 +70,16 @@ services:
     depends_on:
       - mongodb
       - redis
+    networks:
+      - internal-network
   arex-storage-service2:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage2
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '11093:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-storage2:/usr/local/tomcat/logs
     environment:
@@ -73,23 +89,31 @@ services:
     depends_on:
       - mongodb
       - redis
+    networks:
+      - internal-network
   arex-storage-service:
     container_name: storage-nginx
     image: nginx
     volumes:
       - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-storage:/var/log/nginx
+    expose:
+      - "8080"
     ports:
-      - "8093:8080"
+      - internal:8080
     depends_on:
       - arex-storage-service1
       - arex-storage-service2
+    networks:
+      - internal-network
   arex-schedule-service1:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule1
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '10092:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
     environment:
@@ -100,12 +124,16 @@ services:
     depends_on:
       - mongodb
       - redis
+    networks:
+      - internal-network
   arex-schedule-service2:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule2
     restart: always
+    expose:
+      - "8080"
     ports:
-      - '11092:8080'
+      - internal:8080
     volumes:
       - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
     environment:
@@ -116,17 +144,23 @@ services:
     depends_on:
       - mongodb
       - redis
+    networks:
+      - internal-network
   arex-schedule-service:
     container_name: schedule-nginx
     image: nginx
     volumes:
       - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
       - ./arex-logs/nginx-schedule:/var/log/nginx
+    expose:
+      - "8080"
     ports:
-      - "8092:8080"
+      - internal:8080
     depends_on:
       - arex-schedule-service1
       - arex-schedule-service2
+    networks:
+      - internal-network
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -144,6 +178,8 @@ services:
       - MONGO_INITDB_DATABASE=rootdb
       - MONGO_USERNAME=arex
       - MONGO_PASSWORD=iLoveArex
+    networks:
+      - internal-network
   redis:
     image: redis:6.2.6
     container_name: arex-redis
@@ -154,3 +190,8 @@ services:
     volumes:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
+    networks:
+      - internal-network
+networks:
+  internal-network:
+    internal: true
