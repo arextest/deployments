@@ -59,7 +59,6 @@ services:
     ports:
       - "16686:16686"
       - "14250"
-
   zipkin:
     image: openzipkin/zipkin:latest
     restart: always

@@ -1,0 +1,156 @@
+version: "3"
+
+services:
+  arex-gateway:
+    container_name: gateway-nginx
+    image: nginx
+    volumes:
+      - ./conf/nginx-gateway.conf:/etc/nginx/nginx.conf
+      - ./arex-logs/nginx-gateway:/var/log/nginx
+    ports:
+      - "80:8080"
+    depends_on:
+      - arex
+  arex:
+    image: arexadmin01/arex:$AREX_VERSION
+    container_name: arex-front
+    restart: always
+    ports:
+      - '8088:8080'
+    volumes:
+      - ./arex-logs/arex-front:/usr/src/app/logs
+    environment:
+      - SERVICE_REPORT_URL=http://arex-report-service:8080
+      - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
+      - SERVICE_STORAGE_URL=http://arex-storage-service:8080
+    depends_on:
+      - arex-report-service
+      - arex-schedule-service
+      - arex-storage-service
+  arex-report-service:
+    image: arexadmin01/arex-report:$AREX_VERSION
+    container_name: arex-report
+    restart: always
+    ports:
+      - '8090:8080'
+    volumes:
+      - ./arex-logs/arex-report:/usr/local/tomcat/logs
+    environment:
+      - JAVA_OPTS=-Darex.report.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+        -Darex.redis.uri=redis://redis:6379/
+        -Darex.storage.service.url=http://arex-storage-service:8080 
+        -Darex.ui.url=http://arex:8080
+    depends_on:
+      - mongodb
+      - redis
+  arex-storage-service1:
+    image: arexadmin01/arex-storage-serive:$AREX_VERSION
+    container_name: arex-storage1
+    restart: always
+    ports:
+      - '10093:8080'
+    volumes:
+      - ./arex-logs/arex-storage1:/usr/local/tomcat/logs
+    environment:
+      - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+        -Darex.storage.cache.url=redis://redis:6379/ 
+        -Darex.report.service.api=http://arex-report-service:8080
+    depends_on:
+      - mongodb
+      - redis
+  arex-storage-service2:
+    image: arexadmin01/arex-storage-serive:$AREX_VERSION
+    container_name: arex-storage2
+    restart: always
+    ports:
+      - '11093:8080'
+    volumes:
+      - ./arex-logs/arex-storage2:/usr/local/tomcat/logs
+    environment:
+      - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+        -Darex.storage.cache.url=redis://redis:6379/ 
+        -Darex.report.service.api=http://arex-report-service:8080
+    depends_on:
+      - mongodb
+      - redis
+  arex-storage-service:
+    container_name: storage-nginx
+    image: nginx
+    volumes:
+      - ./conf/nginx-storage.conf:/etc/nginx/nginx.conf
+      - ./arex-logs/nginx-storage:/var/log/nginx
+    ports:
+      - "8093:8080"
+    depends_on:
+      - arex-storage-service1
+      - arex-storage-service2
+  arex-schedule-service1:
+    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
+    container_name: arex-schedule1
+    restart: always
+    ports:
+      - '10092:8080'
+    volumes:
+      - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
+    environment:
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+        -Darex.schedule.cache.redis.host=redis://redis:6379
+        -Darex.storage.service.api=http://arex-storage-service:8080 
+        -Darex.report.service.api=http://arex-report-service:8080
+    depends_on:
+      - mongodb
+      - redis
+  arex-schedule-service2:
+    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
+    container_name: arex-schedule2
+    restart: always
+    ports:
+      - '11092:8080'
+    volumes:
+      - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
+    environment:
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+        -Darex.schedule.cache.redis.host=redis://redis:6379
+        -Darex.storage.service.api=http://arex-storage-service:8080 
+        -Darex.report.service.api=http://arex-report-service:8080
+    depends_on:
+      - mongodb
+      - redis
+  arex-schedule-service:
+    container_name: schedule-nginx
+    image: nginx
+    volumes:
+      - ./conf/nginx-schedule.conf:/etc/nginx/nginx.conf
+      - ./arex-logs/nginx-schedule:/var/log/nginx
+    ports:
+      - "8092:8080"
+    depends_on:
+      - arex-schedule-service1
+      - arex-schedule-service2
+  mongodb:
+    image: mongo:5.0
+    container_name: arex-mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./arex-data/mongodb:/data/db
+      - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./arex-logs/mongodb:/var/log/mongodb
+    command: --auth
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=citizix
+      - MONGO_INITDB_ROOT_PASSWORD=S3cret
+      - MONGO_INITDB_DATABASE=rootdb
+      - MONGO_USERNAME=arex
+      - MONGO_PASSWORD=iLoveArex
+  redis:
+    image: redis:6.2.6
+    container_name: arex-redis
+    restart: always
+    command: --appendonly yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./arex-data/redis:/data
+      - ./arex-logs/redis:/var/log/redis
