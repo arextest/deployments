@@ -115,6 +115,7 @@ services:
       - redis
     networks:
       - internal-network
+      - public-network
   arex-schedule-service2:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule2
@@ -133,6 +134,7 @@ services:
       - redis
     networks:
       - internal-network
+      - public-network
   arex-schedule-service:
     container_name: schedule-nginx
     image: nginx
@@ -180,6 +182,4 @@ services:
 networks:
   internal-network:
     internal: true
-    driver_opts:
-      com.docker.network.gateway: 10.5.153.151
   public-network:
