@@ -53,7 +53,6 @@ services:
     volumes:
       - ./arex-community/redis:/data
       - ./arex-community/logs/redis:/var/log/redis
-
 networks:
   community:
     driver: bridge

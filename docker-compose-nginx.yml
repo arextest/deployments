@@ -180,4 +180,6 @@ services:
 networks:
   internal-network:
     internal: true
+    driver_opts:
+      com.docker.network.gateway: 10.5.153.151
   public-network:
