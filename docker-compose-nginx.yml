@@ -153,8 +153,8 @@ services:
     image: mongo:5.0
     container_name: arex-mongodb
     restart: always
-    expose:
-      - "27017"
+    ports:
+      - "27017:27017"
     volumes:
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -168,6 +168,7 @@ services:
       - MONGO_PASSWORD=iLoveArex
     networks:
       - internal-network
+      - public-network
   redis:
     image: redis:6.2.6
     container_name: arex-redis
