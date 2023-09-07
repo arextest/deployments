@@ -34,7 +34,7 @@ services:
     volumes:
       - ./arex-logs/arex-report:/usr/local/tomcat/logs
       - ./additional-config:/usr/local/tomcat/additional-config
-      - /root/github-arex/deployments/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
+      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
@@ -65,7 +65,7 @@ services:
       - '8093:8080'
     volumes:
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
-      - /root/github-arex/deployments/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
+      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
@@ -95,7 +95,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
       - ./custom-dubbo:/usr/local/tomcat/custom-dubbo
-      - /root/github-arex/deployments/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
+      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
