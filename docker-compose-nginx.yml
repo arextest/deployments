@@ -50,6 +50,7 @@ services:
       - redis
     networks:
       - internal-network
+      - public-network
   arex-storage-service1:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage1
