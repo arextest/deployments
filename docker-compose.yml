@@ -31,6 +31,7 @@ services:
           memory: 2G
     ports:
       - '8090:8080'
+      - '20090:20090'
     volumes:
       - ./arex-logs/arex-api:/usr/local/tomcat/logs
       - ./additional-config:/usr/local/tomcat/additional-config
