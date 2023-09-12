@@ -68,11 +68,7 @@ services:
       - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
-        -Darex.service.name=arex-storage-api 
-        -Darex.storage.service.host=10.5.153.151:8093 
-        -Darex.enable.debug=true
-        -Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+      - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
         -Darex.report.service.api=http://arex-api-service:8080 
     depends_on:
@@ -98,11 +94,7 @@ services:
       - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
-        -Darex.service.name=arex-schedule-api 
-        -Darex.storage.service.host=10.5.153.151:8093 
-        -Darex.enable.debug=true
-        -Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
+      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.schedule.cache.redis.host=redis://redis:6379
         -Darex.storage.service.api=http://arex-storage-service:8080 
         -Darex.report.service.api=http://arex-api-service:8080 
