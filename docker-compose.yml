@@ -10,16 +10,16 @@ services:
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
-      - SERVICE_REPORT_URL=http://arex-report-service:8080
+      - SERVICE_REPORT_URL=http://arex-api-service:8080
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
-      - arex-report-service
+      - arex-api-service
       - arex-schedule-service
       - arex-storage-service
-  arex-report-service:
-    image: arexadmin01/arex-report:$AREX_VERSION
-    container_name: arex-report
+  arex-api-service:
+    image: arexadmin01/arex-api:$AREX_VERSION
+    container_name: arex-api
     restart: always
     deploy:
       resources:
@@ -32,7 +32,7 @@ services:
     ports:
       - '8090:8080'
     volumes:
-      - ./arex-logs/arex-report:/usr/local/tomcat/logs
+      - ./arex-logs/arex-api:/usr/local/tomcat/logs
       - ./additional-config:/usr/local/tomcat/additional-config
       - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
@@ -74,7 +74,7 @@ services:
         -Darex.enable.debug=true
         -Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.storage.cache.url=redis://redis:6379/ 
-        -Darex.report.service.api=http://arex-report-service:8080 
+        -Darex.report.service.api=http://arex-api-service:8080 
     depends_on:
       - mongodb
       - redis
@@ -105,7 +105,7 @@ services:
         -Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
         -Darex.schedule.cache.redis.host=redis://redis:6379
         -Darex.storage.service.api=http://arex-storage-service:8080 
-        -Darex.report.service.api=http://arex-report-service:8080 
+        -Darex.report.service.api=http://arex-api-service:8080 
     depends_on:
       - mongodb
       - redis
