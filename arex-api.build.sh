@@ -13,7 +13,7 @@ cd ../arex-api
 mvn clean package -DskipTests
 
 cp ../deployments/dockerfile/arex-api.Dockerfile ./Dockerfile
-docker build -t arexadmin01/arex-api:$AREX_VERSION  .:
+docker build -t arexadmin01/arex-api:$AREX_VERSION  .
 rm -rf ./Dockerfile
 
 cd ..
