@@ -9,11 +9,11 @@ else
 fi
 printf "current AREX Version: $AREX_VERSION "
 
-cd ../arex-report
+cd ../arex-api
 mvn clean package -DskipTests
 
-cp ../deployments/dockerfile/report.Dockerfile ./Dockerfile
-docker build -t arexadmin01/arex-report:$AREX_VERSION  .
+cp ../deployments/dockerfile/arex-api.Dockerfile ./Dockerfile
+docker build -t arexadmin01/arex-api:$AREX_VERSION  .
 rm -rf ./Dockerfile
 
 cd ..
