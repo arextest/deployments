@@ -64,6 +64,7 @@ services:
           memory: 2G
     ports:
       - '8093:8080'
+      - '20093:20093'
     volumes:
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
       - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
@@ -89,6 +90,7 @@ services:
           memory: 2G
     ports:
       - '8092:8080'
+      - '20092:20092'
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
       - ./custom-dubbo:/usr/local/tomcat/custom-dubbo
