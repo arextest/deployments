@@ -1,4 +1,4 @@
-FROM tomcat:9.0-jdk8-openjdk
+FROM tomcat:9.0.80-jre8-temurin
 
 ARG WAR_FILE=./arex-storage-web-api/target/arex-storage-web-api.war
 ADD $WAR_FILE /usr/local/tomcat/webapps/
