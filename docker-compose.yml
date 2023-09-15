@@ -57,9 +57,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 1s
+      interval: 5s
       timeout: 3s
-      retries: 60
+      retries: 15
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
@@ -88,9 +88,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 1s
+      interval: 5s
       timeout: 3s
-      retries: 60
+      retries: 15
   arex-schedule-service:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
@@ -121,9 +121,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 1s
+      interval: 5s
       timeout: 3s
-      retries: 60
+      retries: 15
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
@@ -146,7 +146,7 @@ services:
       test: echo 'db.runCommand("ping").ok' | mongo 127.0.0.1:27017/test --quiet
       interval: 10s
       timeout: 10s
-      retries: 5
+      retries: 6
       start_period: 40s
   redis:
     image: redis:6.2.6
@@ -162,6 +162,6 @@ services:
       - TZ=Asia/Shanghai
     healthcheck:
       test: ["CMD", "redis-cli","ping"]
-      interval: 1s
+      interval: 5s
       timeout: 3s
-      retries: 5
+      retries: 15
