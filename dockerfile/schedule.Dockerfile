@@ -4,7 +4,7 @@ ARG WAR_FILE=./target/arex-schedule-web-api.war
 ADD $WAR_FILE /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/conf
-RUN sed -i 'N;152a\\t<Context path="" docBase="arex-schedule-web-api.war" reloadable="true" />' server.xml
+RUN sed -i 'N;162a\\t<Context path="" docBase="arex-schedule-web-api.war" reloadable="true" />' server.xml
 
 WORKDIR /usr/local/tomcat
 EXPOSE 8080
