@@ -14,11 +14,11 @@ services:
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
-      arex-api-service
+      arex-api-service:
         condition: service_healthy
-      arex-storage-service
+      arex-storage-service:
         condition: service_healthy
-      arex-schedule-service
+      arex-schedule-service:
         condition: service_healthy
   arex-api-service:
     image: arexadmin01/arex-api:$AREX_VERSION
