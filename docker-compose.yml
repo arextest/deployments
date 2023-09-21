@@ -59,7 +59,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
       interval: 5s
       timeout: 3s
-      retries: 15
+      retries: 60
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
@@ -90,7 +90,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
       interval: 5s
       timeout: 3s
-      retries: 15
+      retries: 60
   arex-schedule-service:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
@@ -123,7 +123,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
       interval: 5s
       timeout: 3s
-      retries: 15
+      retries: 60
   mongodb:
     image: mongo:5.0
     container_name: arex-mongodb
