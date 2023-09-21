@@ -24,14 +24,6 @@ services:
     image: arexadmin01/arex-api:$AREX_VERSION
     container_name: arex-api
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
       - '8090:8080'
       - '20090:20090'
@@ -59,14 +51,6 @@ services:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
       - '8093:8080'
       - '20093:20093'
@@ -89,14 +73,6 @@ services:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
       - '8092:8080'
       - '20092:20092'
