@@ -19,13 +19,13 @@ services:
       - arex-storage-service
 
   arex-api-service:
-    image: arexadmin01/arex-report:$AREX_VERSION
-    container_name: arex-report
+    image: arexadmin01/arex-api:$AREX_VERSION
+    container_name: arex-api
     restart: always
     ports:
       - '8090:8080'
     volumes:
-      - ./arex-logs/arex-report:/usr/local/tomcat/logs
+      - ./arex-logs/arex-api:/usr/local/tomcat/logs
       - ./additional-config:/usr/local/tomcat/additional-config
     environment:
       - TZ=Asia/Shanghai
