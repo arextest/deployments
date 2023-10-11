@@ -32,8 +32,8 @@ services:
       - ./additional-config:/usr/local/tomcat/additional-config
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS=-Darex.report.mongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db  
-        -Darex.redis.uri=redis://redis:6379/
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
+        -Darex.redis.uri=$AREX_REDIS_URI
         -Darex.storage.service.url=http://arex-storage-service:8080 
         -Dspring.config.additional-location=/usr/local/tomcat/additional-config/
         -Dspring.config.name=application,oauth
@@ -58,9 +58,9 @@ services:
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS=-Darex.storage.mongo.host=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
-        -Darex.storage.cache.url=redis://redis:6379/ 
-        -Darex.report.service.api=http://arex-api-service:8080 
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
+        -Darex.redis.uri=$AREX_REDIS_URI
+        -Darex.api.service.api=http://arex-api-service:8080
     depends_on:
       arex-api-service:
         condition: service_healthy
@@ -81,10 +81,10 @@ services:
       - ./custom-dubbo:/usr/local/tomcat/custom-dubbo
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS=-Dmongo.uri=mongodb://arex:iLoveArex@mongodb:27017/arex_storage_db 
-        -Darex.schedule.cache.redis.host=redis://redis:6379
-        -Darex.storage.service.api=http://arex-storage-service:8080 
-        -Darex.report.service.api=http://arex-api-service:8080 
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
+        -Darex.redis.uri=$AREX_REDIS_URI
+        -Darex.storage.service.api=http://arex-storage-service:8080
+        -Darex.api.service.api=http://arex-api-service:8080
     depends_on:
       arex-api-service:
         condition: service_healthy
