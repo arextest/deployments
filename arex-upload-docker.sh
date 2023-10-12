@@ -10,7 +10,7 @@ else
 fi
 
 docker push arexadmin01/arex:$AREX_VERSION
-docker push arexadmin01/arex-report:$AREX_VERSION
+docker push arexadmin01/arex-api:$AREX_VERSION
 docker push arexadmin01/arex-storage-serive:$AREX_VERSION
 docker push arexadmin01/arex-replay-schedule:$AREX_VERSION
 # docker push arexadmin01/arex-community-test:0.0.1
