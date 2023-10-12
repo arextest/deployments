@@ -3,10 +3,10 @@ version: "3"
 services:
   arex:
     image: arexadmin01/arex:$AREX_VERSION
-    container_name: arex-front
+    container_name: arex-front-$AREX_VERSION
     restart: always
     ports:
-      - '8088:8080'
+      - '${AREX_HOST_PORT}:8080'
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
@@ -14,162 +14,89 @@ services:
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
-      arex-api-service:
-        condition: service_healthy
-      arex-storage-service:
-        condition: service_healthy
-      arex-schedule-service:
-        condition: service_healthy
+      - arex-api-service
+      - arex-schedule-service
+      - arex-storage-service
+
   arex-api-service:
     image: arexadmin01/arex-api:$AREX_VERSION
-    container_name: arex-api
+    container_name: arex-api-$AREX_VERSION
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
-      - '8090:8080'
-      - '20090:20090'
+      - '${AREX_API_HOST_PORT}:8080'
     volumes:
       - ./arex-logs/arex-api:/usr/local/tomcat/logs
       - ./additional-config:/usr/local/tomcat/additional-config
-      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar' 
-        -Darex.service.name=arex-api 
-        -Darex.storage.service.host=10.5.153.151:8093 
-        -Darex.enable.debug=true
-        -Darex.mongo.uri=$AREX_MONGO_URI
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
         -Darex.redis.uri=$AREX_REDIS_URI
         -Darex.storage.service.url=http://arex-storage-service:8080 
         -Dspring.config.additional-location=/usr/local/tomcat/additional-config/
         -Dspring.config.name=application,oauth
+        -Darex.prometheus.port=
     depends_on:
-      mongodb:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 60
+      - mongodb  
+      - redis
   arex-storage-service:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
-    container_name: arex-storage
+    container_name: arex-storage-$AREX_VERSION
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
-      - '8093:8080'
-      - '20093:20093'
+      - '${AREX_STORAGE_HOST_PORT}:8080'
     volumes:
       - ./arex-logs/arex-storage:/usr/local/tomcat/logs
-      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar'
-        -Darex.service.name=arex-storage-api
-        -Darex.storage.service.host=10.5.153.151:8093
-        -Darex.enable.debug=true
-        -Darex.mongo.uri=$AREX_MONGO_URI
-        -Darex.redis.uri=$AREX_REDIS_URI
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
+        -Darex.redis.uri=$AREX_REDIS_URI 
         -Darex.api.service.api=http://arex-api-service:8080
+        -Darex.prometheus.port=
     depends_on:
-      arex-api-service:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 60
+      - mongodb
+      - redis
   arex-schedule-service:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
-    container_name: arex-schedule
+    container_name: arex-schedule-$AREX_VERSION
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '2'
-          memory: 2G
     ports:
-      - '8092:8080'
-      - '20092:20092'
+      - '${AREX_REPLAY_HOST_PORT}:8080'
     volumes:
       - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
-      - ./custom-dubbo:/usr/local/tomcat/custom-dubbo
-      - /root/github-arex/arex-agent-java/arex-agent-jar:/usr/local/tomcat/arex-agent-jar
     environment:
       - TZ=Asia/Shanghai
-      - JAVA_OPTS='-javaagent:/usr/local/tomcat/arex-agent-jar/arex-agent.jar'
-        -Darex.service.name=arex-schedule-api
-        -Darex.storage.service.host=10.5.153.151:8093
-        -Darex.enable.debug=true
-        -Darex.mongo.uri=$AREX_MONGO_URI
+      - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
         -Darex.redis.uri=$AREX_REDIS_URI
         -Darex.storage.service.api=http://arex-storage-service:8080 
         -Darex.api.service.api=http://arex-api-service:8080
+        -Darex.prometheus.port=
     depends_on:
-      arex-api-service:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/vi/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 60
+      - mongodb
+      - redis
   mongodb:
     image: mongo:5.0
-    container_name: arex-mongodb
+    container_name: arex-mongodb-$AREX_VERSION
     restart: always
     ports:
-      - 27017:27017
+      - ${AREX_MONGO_HOST_PORT}:27017
     volumes:
       - ./arex-data/mongodb:/data/db
       - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - ./arex-logs/mongodb:/var/log/mongodb
     command: --auth
     environment:
-      - TZ=Asia/Shanghai
       - MONGO_INITDB_ROOT_USERNAME=citizix
       - MONGO_INITDB_ROOT_PASSWORD=S3cret
       - MONGO_INITDB_DATABASE=rootdb
       - MONGO_USERNAME=arex
       - MONGO_PASSWORD=iLoveArex
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo 127.0.0.1:27017/test --quiet
-      interval: 10s
-      timeout: 10s
-      retries: 6
-      start_period: 40s
   redis:
     image: redis:6.2.6
-    container_name: arex-redis
+    container_name: arex-redis-$AREX_VERSION
     restart: always
     command: --appendonly yes
     ports:
-      - 6379:6379
+      - ${AREX_REDIS_HOST_PORT}:6379
     volumes:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
-    environment:
-      - TZ=Asia/Shanghai
-    healthcheck:
-      test: ["CMD", "redis-cli","ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 15
