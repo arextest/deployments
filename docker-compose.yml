@@ -5,6 +5,8 @@ services:
     image: arexadmin01/arex:$AREX_VERSION
     container_name: arex-front-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     ports:
       - '${AREX_HOST_PORT}:8080'
     volumes:
@@ -22,6 +24,8 @@ services:
     image: arexadmin01/arex-api:$AREX_VERSION
     container_name: arex-api-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     ports:
       - '${AREX_API_HOST_PORT}:8080'
     volumes:
@@ -42,6 +46,8 @@ services:
     image: arexadmin01/arex-storage-serive:$AREX_VERSION
     container_name: arex-storage-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     ports:
       - '${AREX_STORAGE_HOST_PORT}:8080'
     volumes:
@@ -59,6 +65,8 @@ services:
     image: arexadmin01/arex-replay-schedule:$AREX_VERSION
     container_name: arex-schedule-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     ports:
       - '${AREX_REPLAY_HOST_PORT}:8080'
     volumes:
@@ -77,6 +85,8 @@ services:
     image: mongo:5.0
     container_name: arex-mongodb-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     ports:
       - ${AREX_MONGO_HOST_PORT}:27017
     volumes:
@@ -94,9 +104,15 @@ services:
     image: redis:6.2.6
     container_name: arex-redis-$AREX_VERSION
     restart: always
+    networks:
+      - my_network
     command: --appendonly yes
     ports:
       - ${AREX_REDIS_HOST_PORT}:6379
     volumes:
       - ./arex-data/redis:/data
       - ./arex-logs/redis:/var/log/redis
+networks:
+  my_network:
+    driver: bridge
+    name: $AREX_VERSION
