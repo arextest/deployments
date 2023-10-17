@@ -2,8 +2,8 @@ version: "3"
 
 services:
   arex:
-    image: arexadmin01/arex:$AREX_VERSION
-    container_name: arex-front-$AREX_VERSION
+    image: arexadmin01/arex:{$AREX_VERSION}
+    container_name: arex-front-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -21,8 +21,8 @@ services:
       - arex-storage-service
 
   arex-api-service:
-    image: arexadmin01/arex-api:$AREX_VERSION
-    container_name: arex-api-$AREX_VERSION
+    image: arexadmin01/arex-api:{$AREX_VERSION}
+    container_name: arex-api-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -43,8 +43,8 @@ services:
       - mongodb  
       - redis
   arex-storage-service:
-    image: arexadmin01/arex-storage-serive:$AREX_VERSION
-    container_name: arex-storage-$AREX_VERSION
+    image: arexadmin01/arex-storage-serive:{$AREX_VERSION}
+    container_name: arex-storage-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -62,8 +62,8 @@ services:
       - mongodb
       - redis
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
-    container_name: arex-schedule-$AREX_VERSION
+    image: arexadmin01/arex-replay-schedule:{$AREX_VERSION}
+    container_name: arex-schedule-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -83,7 +83,7 @@ services:
       - redis
   mongodb:
     image: mongo:5.0
-    container_name: arex-mongodb-$AREX_VERSION
+    container_name: arex-mongodb-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -102,7 +102,7 @@ services:
       - MONGO_PASSWORD=iLoveArex
   redis:
     image: redis:6.2.6
-    container_name: arex-redis-$AREX_VERSION
+    container_name: arex-redis-{$AREX_VERSION}
     restart: always
     networks:
       - my_network
@@ -115,4 +115,4 @@ services:
 networks:
   my_network:
     driver: bridge
-    name: $AREX_VERSION
+    name: {$AREX_VERSION}
