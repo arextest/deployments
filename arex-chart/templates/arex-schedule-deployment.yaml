@@ -35,10 +35,10 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -Dmongo.uri={{ include "arex.mongoConnection" .}}
-                -Darex.schedule.cache.redis.host={{ include "arex.redisConnection" .}}
+              value: -Darex.mongo.uri={{ include "arex.mongoConnection" .}}
+                -Darex.redis.uri={{ include "arex.redisConnection" .}}
                 -Darex.storage.service.api=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.storage.service.servicePort }} 
-                -Darex.report.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.report.service.servicePort }}
+                -Darex.api.service.api=http://{{ template "arex.report.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.report.service.servicePort }}
           ports:
             - containerPort: {{ .Values.schedule.service.servicePort }}
           resources:

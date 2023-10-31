@@ -35,10 +35,10 @@ spec:
           {{- end }}
           env:
             - name: JAVA_OPTS
-              value: -Darex.report.mongo.uri={{ include "arex.mongoConnection" .}}
+              value: -Darex.mongo.uri={{ include "arex.mongoConnection" .}}
                 -Darex.redis.uri={{ include "arex.redisConnection" .}}
                 -Darex.storage.service.url=http://{{ template "arex.storage.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.storage.service.servicePort }} 
-                -Darex.ui.url=http://{{ template "arex.front.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.front.service.servicePort }}
+                -Darex.schedule.service.url=http://{{ template "arex.schedule.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.schedule.service.servicePort }}
           ports:
             - containerPort: {{ .Values.report.service.servicePort }}
           resources:
