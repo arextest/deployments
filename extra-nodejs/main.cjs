@@ -1,10 +1,11 @@
 console.log('hello world')
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db";
+const mongoUrl = "mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db";
+const scheduleEndpoint = 'http://10.5.153.1:8092/api/createPlan'
 const appId = 'community-test-0905'
 const targetHost = 'http://10.5.153.1:18080'
 
-const client = new MongoClient(url);
+const client = new MongoClient(mongoUrl);
 
 
 async function main() {
@@ -35,8 +36,18 @@ async function main() {
     }))
   }
 
-  console.log(JSON.stringify(createPlanReq, null, 4))
-  return 'done.';
+  const reqStr = JSON.stringify(createPlanReq, null, 4)
+  console.log(reqStr)
+
+  const response = await fetch(scheduleEndpoint, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: reqStr,
+  });
+
+  return response.status;
 }
 
 main()
