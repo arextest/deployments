@@ -39,3 +39,5 @@ arex-logs/
 config.d/
 elk/filebeat/data/
 elk/elasticsearch/data/
+
+node_modules
