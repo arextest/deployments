@@ -10,21 +10,23 @@ services:
     volumes:
       - ./arex-logs/arex-front:/usr/src/app/logs
     environment:
-      - SERVICE_REPORT_URL=http://arex-report-service:8080
+      - SERVICE_REPORT_URL=http://arex-api-service:8080
       - SERVICE_SCHEDULE_URL=http://arex-schedule-service:8080
       - SERVICE_STORAGE_URL=http://arex-storage-service:8080
     depends_on:
-      - arex-report-service
+      - arex-api-service
       - arex-schedule-service
       - arex-storage-service
-  arex-report-service:
-    image: arexadmin01/arex-report:$AREX_VERSION
-    container_name: arex-report
+
+  arex-api-service:
+    image: arexadmin01/arex-api:$AREX_VERSION
+    container_name: arex-api
     restart: always
     ports:
       - '8090:8080'
     volumes:
-      - ./arex-logs/arex-report:/usr/local/tomcat/logs
+      - ./arex-logs/arex-api:/usr/local/tomcat/logs
+      - ./additional-config:/usr/local/tomcat/additional-config
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
@@ -87,6 +89,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule1:/usr/local/tomcat/logs
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
         -Darex.redis.uri=$AREX_REDIS_URI
         -Darex.storage.service.api=http://arex-storage-service:8080
@@ -103,6 +106,7 @@ services:
     volumes:
       - ./arex-logs/arex-schedule2:/usr/local/tomcat/logs
     environment:
+      - TZ=Asia/Shanghai
       - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
         -Darex.redis.uri=$AREX_REDIS_URI
         -Darex.storage.service.api=http://arex-storage-service:8080
