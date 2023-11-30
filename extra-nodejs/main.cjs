@@ -26,7 +26,7 @@ async function main() {
   // console.log(operations);
 
   const createPlanReq = {
-    "appId": "community-test-0905",
+    "appId": appId,
     "replayPlanType": 2,
     "targetEnv": targetHost,
     "operator": "AREX",
