@@ -1,5 +1,5 @@
 # AREX: Real automated API testing with real data.
-**AREX Components Version: 0.2.9**
+**AREX Components Version: 0.6.1**
 
 ## AREX Docker-Compose Install
 
@@ -15,7 +15,7 @@ docker compose up -d
 3. Users can also modify the old version number to roll back to a previous version.
 ```
 cat .env
-AREX_VERSION=0.2.9
+AREX_VERSION=0.6.1
 ```
 ### Helm Chart Install
 ```
