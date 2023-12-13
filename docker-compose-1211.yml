@@ -39,6 +39,9 @@ services:
         -Dspring.config.additional-location=/usr/local/tomcat/additional-config/
         -Dspring.config.name=application,oauth
         -Darex.prometheus.port=
+    depends_on:
+      - mongodb  
+      - redis
   arex-storage-service:
     image: $AREX_STORAGE_IMAGE
     container_name: arex-storage-$AREX_VERSION
@@ -55,6 +58,9 @@ services:
         -Darex.redis.uri=$AREX_REDIS_URI 
         -Darex.api.service.api=http://arex-api-service:8080
         -Darex.prometheus.port=
+    depends_on:
+      - mongodb
+      - redis
   arex-schedule-service:
     image: $AREX_SCHEDULE_IMAGE
     container_name: arex-schedule-$AREX_VERSION
@@ -72,6 +78,41 @@ services:
         -Darex.storage.service.api=http://arex-storage-service:8080 
         -Darex.api.service.api=http://arex-api-service:8080
         -Darex.prometheus.port=
+    depends_on:
+      - mongodb
+      - redis
+  mongodb:
+    image: mongo:5.0
+    container_name: arex-mongodb-$AREX_VERSION
+    restart: always
+    networks:
+      - my_network
+    ports:
+      - ${AREX_MONGO_HOST_PORT}:27017
+    volumes:
+      - ./arex-data/mongodb:/data/db
+      - ./mongo-allone-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./arex-logs/mongodb:/var/log/mongodb
+    command: --auth
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=citizix
+      - MONGO_INITDB_ROOT_PASSWORD=S3cret
+      - MONGO_INITDB_DATABASE=rootdb
+      - MONGO_USERNAME=arex
+      - MONGO_PASSWORD=iLoveArex
+  redis:
+    image: redis:6.2.6
+    container_name: arex-redis-$AREX_VERSION
+    restart: always
+    networks:
+      - my_network
+    command: --appendonly yes
+    ports:
+      - ${AREX_REDIS_HOST_PORT}:6379
+    volumes:
+      - ./arex-data/redis:/data
+      - ./arex-logs/redis:/var/log/redis
 networks:
   my_network:
     driver: bridge
+    name: '${AREX_VERSION}'
