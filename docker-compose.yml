@@ -21,7 +21,7 @@ services:
       arex-schedule-service:
         condition: service_healthy
   arex-api-service:
-    image: arexadmin01/arex-api:$AREX_VERSION
+    image: $AREX_API_IMAGE
     container_name: arex-api
     restart: always
     deploy:
@@ -61,7 +61,7 @@ services:
       timeout: 3s
       retries: 60
   arex-storage-service:
-    image: arexadmin01/arex-storage-serive:$AREX_VERSION
+    image: $AREX_STORAGE_IMAGE
     container_name: arex-storage
     restart: always
     deploy:
@@ -96,7 +96,7 @@ services:
       timeout: 3s
       retries: 60
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
+    image: $AREX_SCHEDULE_IMAGE
     container_name: arex-schedule
     restart: always
     deploy:
