@@ -4,7 +4,7 @@ home: http://www.arextest.com
 maintainers: 
 - email: robin.haibingwang@gmail.com
   name: robin
-appVersion: "0.6.1"
+appVersion: "0.6.2.1"
 description: Helm chart of AREX.
 name: arex
 sources: 
