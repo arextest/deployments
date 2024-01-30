@@ -15,7 +15,7 @@ docker compose up -d
 3. Users can also modify the old version number to roll back to a previous version.
 ```
 cat .env
-AREX_VERSION=0.6.2.1
+AREX_VERSION=0.6.2.2
 ```
 ### Helm Chart Install
 ```
