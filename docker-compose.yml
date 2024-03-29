@@ -25,7 +25,7 @@ services:
     ports:
       - '8090:8080'
     volumes:
-      - ./arex-logs/arex-api:/usr/local/tomcat/logs
+      - ./arex-logs/arex-api:/logs
       - ./additional-config:/usr/local/tomcat/additional-config
     environment:
       - TZ=Asia/Shanghai
@@ -44,7 +44,7 @@ services:
     ports:
       - '8093:8080'
     volumes:
-      - ./arex-logs/arex-storage:/usr/local/tomcat/logs
+      - ./arex-logs/arex-storage:/logs
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
@@ -60,7 +60,7 @@ services:
     ports:
       - '8092:8080'
     volumes:
-      - ./arex-logs/arex-schedule:/usr/local/tomcat/logs
+      - ./arex-logs/arex-schedule:/logs
     environment:
       - TZ=Asia/Shanghai
       - JAVA_OPTS=-Darex.mongo.uri=$AREX_MONGO_URI
