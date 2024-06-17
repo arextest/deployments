@@ -2,7 +2,7 @@ version: "3"
 
 services:
   arex:
-    image: arexadmin01/arex:$AREX_VERSION
+    image: ${AREX_REGISTRY}arexadmin01/arex:${AREX_VERSION}
     container_name: arex-front
     restart: always
     ports:
@@ -21,7 +21,7 @@ services:
       arex-schedule-service:
         condition: service_healthy
   arex-api-service:
-    image: arexadmin01/arex-api:$AREX_VERSION
+    image: ${AREX_REGISTRY}arexadmin01/arex-api:${AREX_VERSION}
     container_name: arex-api
     restart: always
     ports:
@@ -48,7 +48,7 @@ services:
       timeout: 3s
       retries: 15
   arex-storage-service:
-    image: arexadmin01/arex-storage-serive:$AREX_VERSION
+    image: ${AREX_REGISTRY}arexadmin01/arex-storage-serive:${AREX_VERSION}
     container_name: arex-storage
     restart: always
     ports:
@@ -70,7 +70,7 @@ services:
       timeout: 3s
       retries: 15
   arex-schedule-service:
-    image: arexadmin01/arex-replay-schedule:$AREX_VERSION
+    image: ${AREX_REGISTRY}arexadmin01/arex-replay-schedule:${AREX_VERSION}
     container_name: arex-schedule
     restart: always
     ports:
