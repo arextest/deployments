@@ -19,10 +19,9 @@ AREX_VERSION=0.6.3.2
 ```
 ### Helm Chart Install
 ```
-kubectl create namespace arex-beta(your arex namespace)
-helm install arex-beta-release -n arex-beta   ./arex-chart  
+helm install aretest --namespace=aretest --create-namespace ./arex-chart 
 or update
-helm upgrade arex-beta-release -n arex-beta   ./arex-chart  
+helm upgrade aretest -n aretest ./arex-chart  
 ```
 
 ## AREX Docker-Compose Uninstall

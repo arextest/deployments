@@ -6,9 +6,9 @@ fullnameOverride: ""
 # register prefix
 registerPre: "arexadmin01/"
 # mongodb config demo
-mongoInfo: "mongodb://arex:iLoveArex@10.5.153.1:27017/arex_storage_db"
+mongoInfo: "mongodb://arextest-arex-mongodb.arextest:27017/arex_storage_db"
 # redis config demo
-redisInfo: "redis://10.5.153.1:6390/"
+redisInfo: "redis://arextest-arex-redis.arextest:6390"
 
 front:
   enabled: true
@@ -36,7 +36,7 @@ front:
     type: ClusterIP
 
   ingress:
-    enabled: true
+    enabled: false
     annotations: {}
     hosts: ["local.arextest.com"]
     tls: ""
